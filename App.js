@@ -7,6 +7,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 
 import WeatherForecastScreen from "./screens/WeatherForecastScreen";
+import LocationSelectionScreen from "./screens/LocationSelectionScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+import LoadingScreen from "./screens/LoadingScreen";
+import ErrorScreen from "./screens/ErrorScreen";
+import DetailForecastScreen from "./screens/DetailForecastScreen";
+import AboutScreen from "./screens/AboutScreen";
 
 SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
 
@@ -64,7 +70,13 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayout}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={WeatherForecastScreen} />
+            <Stack.Screen name="Home" component={LocationSelectionScreen} />
+            <Stack.Screen name="WeatherForecast" component={WeatherForecastScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Loading" component={LoadingScreen} />
+            <Stack.Screen name="Error" component={ErrorScreen} />
+            <Stack.Screen name="DetailForecast" component={DetailForecastScreen} />
+            <Stack.Screen name="About" component={AboutScreen} />
           </Stack.Navigator>
         </NavigationContainer>
 	<Text style = {styles.label}> Weather </Text>

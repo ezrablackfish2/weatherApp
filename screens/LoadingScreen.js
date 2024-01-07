@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-const WeatherForecastScreen = props => {
-	// this function shows weather up to 5 days from mock API
+const LoadingScreen = props => {
+	// this function loads until another thing comes up
     
     return <View style={styles.container}>
-        <Text>Weather Forecasing screen</Text>
-
-	<Button title="detail forecast" onPress={() => { props.navigation.navigate("DetailForecast")}}/>
+        <Text>loading screen</Text>
+	
     </View>
 };
 
@@ -25,4 +24,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default WeatherForecastScreen;
+export default LoadingScreen;
