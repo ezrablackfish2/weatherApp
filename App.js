@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 
-import WeatherShowScreen from "./screens/WeatherShowScreen";
+import WeatherForecastScreen from "./screens/WeatherForecastScreen";
 
 SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
 
@@ -64,7 +64,7 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayout}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={WeatherShowScreen} />
+            <Stack.Screen name="Home" component={WeatherForecastScreen} />
           </Stack.Navigator>
         </NavigationContainer>
 	<Text style = {styles.label}> Weather </Text>

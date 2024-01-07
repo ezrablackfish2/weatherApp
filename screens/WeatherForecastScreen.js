@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const WeatherShowScreen = props => {
+const WeatherForecastScreen = props => {
 	// this function shows weather up to 5 days from mock API
     
     return <View style={styles.container}>
-        <Text>Weather Showing screen</Text>
+        <Text>Weather Forecasing screen</Text>
     </View>
 };
 
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default WeatherShowScreen;
+export default WeatherForecastScreen;
