@@ -1,33 +1,27 @@
-import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useState, useEffect, useCallback } from "react";
-import * as SplashScreen from "expo-splash-screen";
-import * as Font from "expo-font";
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack'
-
+import { createStackNavigator } from '@react-navigation/stack';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 
 import WeatherShowScreen from "./screens/WeatherShowScreen";
 
+SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
 
-SplashScreen.preventAutoHideAsync(); // this makes the splash screen overriding it to show
-
-const Stack = createStackNavigator(); // this decalres a stack navigator
-
+const Stack = createStackNavigator();  // this declares a navigation system using stack
 
 export default function App() {
-	// this is where the weather app start this is the root app function
-	const [weather, setWeather] = useState("rainy"); // weather state hook
-	const [appIsLoaded, setAppIsLoaded] = useState(false); //tell if the app is loaded shows the app icon
+	// this is where the weather app works this is the root function
+  const [appIsLoaded, setAppIsLoaded] = useState(false);  //tell if the app is loaded shows the app icon 
 
-	useEffect(() => {
-		const prepare = async() => {
-			// this fetches font from directory and loads it to react native
-			try {
-			await Font.loadAsync({	
-				// this function loads the fonts
+  useEffect(() => {
+    async function loadFonts() {
+		// this fetches font from directory and lddoads it to react native
+      try {
+        await Font.loadAsync({
+		// this function loads the fonts
 				"Bellota": require("./assets/fonts/Bellota-Regular.ttf"),
 				"Aguafina": require("./assets/fonts/AguafinaScript-Regular.ttf"),
 				"Barrio": require("./assets/fonts/Barrio-Regular.ttf"),
@@ -45,53 +39,35 @@ export default function App() {
 				"Rajdhani": require("./assets/fonts/Rajdhani-Regular.ttf"),
 				"SedgwickAve": require("./assets/fonts/SedgwickAve-Regular.ttf"),
 				"Shadows": require("./assets/fonts/ShadowsIntoLight-Regular.ttf"),
-			})
-			}
-			catch (error) {
-				console.log(error);
-			}
-			finally {
-				setAppIsLoaded(true);
-			}		
-		};
-		prepare();
-	}, [])
+	  
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setAppIsLoaded(true);
+      }
+    }
+    loadFonts();
+  }, []);
 
+  const onLayout = useCallback(async () => {
+    if (appIsLoaded) {
+      await SplashScreen.hideAsync();  // hides the app icon
+    }
+  }, [appIsLoaded]);
 
-	const onLayout = useCallback(async () => {
-		if (appIsLoaded) {
-			await SplashScreen.hideAsync(); // hides the app icon
-		}
-	}, [appIsLoaded]);
-
-	if (!appIsLoaded) {
-		return null; //if the app icon is shown load nothing
-	}
-
-
-	const changeWeather = () => {
-		setWeather("sunny"); // this changes the weather from rainy to sunny
-	}
-
-
+  if (!appIsLoaded) {
+    return null;  //if the app icon is shown load nothing
+  }
 
   return (
-    <SafeAreaProvider style={styles.container} onLayout={onLayout}>
-	  <SafeAreaView>
-
-
-      <Text style = {styles.label}>Weather</Text>
-
-		<NavigationContainer>
-	      <Stack.Navigator>
-      		<Stack.Screen name="Home" component={ WeatherShowScreen } />
-	  	</Stack.Navigator>
-
-		</NavigationContainer>
-
-
-      <StatusBar style="auto" />
-	  </SafeAreaView>
+    <SafeAreaProvider onLayout={onLayout}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={WeatherShowScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+	<Text style = {styles.label}> Weather </Text>
     </SafeAreaProvider>
   );
 }
@@ -99,14 +75,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: '#ffffff',
-    backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
+    fontFamily: "Bellota",
   },
-  label : {
-	  fontFamily: "Rajdhani",
-  },
-	weather : {
-	}
+	label : {
+		fontFamily: "Bellota",
+		fontSize: 20,
+	},
 });
+
+
+
+
+
+
