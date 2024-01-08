@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 
 import WeatherForecastScreen from "./screens/WeatherForecastScreen";
@@ -29,9 +31,24 @@ const TabNavigator = () => {
 			headerTitle: '',
 			headerShadowVisible: false,
 		}}>
-      		<Tab.Screen name="DetailForecast" component={DetailForecastScreen} options={{tabBarLabel: "Today Weather"}} />
-      		<Tab.Screen name="WeatherForecast" component={WeatherForecastScreen} options={{tabBarLabel: "Weather Forecast"}}  />
-      		<Tab.Screen name="About" component={AboutScreen} options={{tabBarLabel: "About Us"}}  />
+      		<Tab.Screen name="DetailForecast" component={DetailForecastScreen} options={{
+			tabBarLabel: "Today Weather",
+			tabBarIcon: ( { color, size }) => (
+				<Ionicons name="today" size={ size } color={ color } />	
+			)
+		}} />
+      		<Tab.Screen name="WeatherForecast" component={WeatherForecastScreen} options={{
+			tabBarLabel: "Weather Forecast",
+			tabBarIcon: ( { color, size }) => (
+				<Entypo name="area-graph" size={ size } color={ color } />
+			)
+		}}  />
+      		<Tab.Screen name="About" component={AboutScreen} options={{
+			tabBarLabel: "About Us",
+			tabBarIcon: ({ color, size }) => (
+				<Entypo name="help" size={ size } color={ color } />
+			)
+		}}  />
     	</Tab.Navigator>
 	)
 }
