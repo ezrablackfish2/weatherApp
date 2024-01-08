@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 import WeatherForecastScreen from "./screens/WeatherForecastScreen";
 import LocationSelectionScreen from "./screens/LocationSelectionScreen";
@@ -17,6 +19,23 @@ import AboutScreen from "./screens/AboutScreen";
 SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
 
 const Stack = createStackNavigator();  // this declares a navigation system using stack
+const Tab = createBottomTabNavigator(); // this declares a tab navigator
+
+
+const TabNavigator = () => {
+	return (
+	<Tab.Navigator 
+		screenOptions={{
+			headerTitle: '',
+			headerShadowVisible: false,
+		}}>
+      		<Tab.Screen name="DetailForecast" component={DetailForecastScreen} options={{tabBarLabel: "Today Weather"}} />
+      		<Tab.Screen name="WeatherForecast" component={WeatherForecastScreen} options={{tabBarLabel: "Weather Forecast"}}  />
+      		<Tab.Screen name="About" component={AboutScreen} options={{tabBarLabel: "About Us"}}  />
+    	</Tab.Navigator>
+	)
+}
+
 
 export default function App() {
 	// this is where the weather app works this is the root function
@@ -70,16 +89,57 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayout}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={LocationSelectionScreen} />
-            <Stack.Screen name="WeatherForecast" component={WeatherForecastScreen} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-            <Stack.Screen name="Loading" component={LoadingScreen} />
+            <Stack.Screen name="Home" component={TabNavigator} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
+            <Stack.Screen name="WeatherForecast" component={WeatherForecastScreen} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
+            <Stack.Screen name="Settings" component={SettingsScreen} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
+            <Stack.Screen name="Loading" component={LoadingScreen} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
             <Stack.Screen name="Error" component={ErrorScreen} />
-            <Stack.Screen name="DetailForecast" component={DetailForecastScreen} />
-            <Stack.Screen name="About" component={AboutScreen} />
+            <Stack.Screen name="DetailForecast" component={DetailForecastScreen} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
+            <Stack.Screen name="About" component={AboutScreen} options={{
+		    	headerTitle: "",
+		    	gestureEnabled: true,
+			animationEnabled: true,
+			presentation: "modal",
+			headerBackTitle: "Go Back",
+			headerShadowVisible: false,
+		    }}/>
           </Stack.Navigator>
         </NavigationContainer>
-	<Text style = {styles.label}> Weather </Text>
     </SafeAreaProvider>
   );
 }

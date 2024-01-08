@@ -7,7 +7,7 @@ const WeatherForecastScreen = props => {
     return <View style={styles.container}>
         <Text>Weather Forecasing screen</Text>
 
-	<Button title="detail forecast" onPress={() => { props.navigation.navigate("DetailForecast")}}/>
+	<Button title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
     </View>
 };
 
