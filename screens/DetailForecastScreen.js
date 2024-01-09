@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import backgroundImage from "../assets/images/weather.png";
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Feather } from '@expo/vector-icons';
+
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
-const Drawer = createDrawerNavigator();
+import backgroundImage from "../assets/images/weather.png";
 
 
 
@@ -24,7 +24,12 @@ const DetailForecastScreen = props => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
-		<Button style={styles.settingsbutton} title="Settings" onPress={() => { props.navigation.toggleDrawer() }}/>{/* this directs the user to the weather setting screen */}
+		<TouchableOpacity 
+	    	style={styles.settingsbutton} 
+	    	title="Settings" 
+	    	onPress={() => { props.navigation.toggleDrawer() }}>{/* this directs the user to the weather setting screen */}
+	    	<Feather name="menu" size={30} color="#ffbbff" />
+	    	</TouchableOpacity>
 		</ImageBackground>
     </SafeAreaView>
     );
@@ -40,8 +45,12 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	settingsbutton : {
-		color: "red",
-		backgroundColor: "red",
+		position: "absolute",
+		right: 5,
+		top: 5,
+		backgroundColor: "#175EfB",
+		borderRadius: 50,
+		padding: 10,
 	},
 	backgroundImage: {
 		width: "100%",
