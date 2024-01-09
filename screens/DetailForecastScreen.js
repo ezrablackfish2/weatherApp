@@ -19,10 +19,8 @@ const DetailForecastScreen = props => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
-		</ImageBackground>
-		<View>
 		<Button style={styles.settingsbutton} title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
-		</View>
+		</ImageBackground>
     </SafeAreaView>
     );
 };

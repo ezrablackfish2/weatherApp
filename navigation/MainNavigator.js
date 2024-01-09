@@ -30,23 +30,25 @@ const TabNavigator = () => {
 			headerTitle: '',
 			headerShadowVisible: false,
 			headerShown: false,
+			tabBarLabelStyle: styles.tab,
+			tabBarStyle: styles.tabWhole,
 		}}>
       		<Tab.Screen name="DetailForecast" component={DetailForecastScreen} options={{
-			tabBarLabel: "Today Weather",
+			tabBarLabel: "",
 			tabBarIcon: ( { color, size }) => (
-				<Ionicons name="today" size={ size } color={ color } />	
+				<Ionicons name="today" size={ 40 } color={ color } height={40} width={40} bottom={-15}/>	
 			)
 		}} />
       		<Tab.Screen name="WeatherForecast" component={WeatherForecastScreen} options={{
-			tabBarLabel: "Weather Forecast",
+			tabBarLabel: "",
 			tabBarIcon: ( { color, size }) => (
-				<Entypo name="area-graph" size={ size } color={ color } />
+				<Entypo name="area-graph" size={ 40 } color={ color } height={40} bottom={-15} />
 			)
 		}}  />
       		<Tab.Screen name="About" component={AboutScreen} options={{
-			tabBarLabel: "About Us",
+			tabBarLabel: "",
 			tabBarIcon: ({ color, size }) => (
-				<Entypo name="help" size={ size } color={ color } />
+				<Entypo name="help" size={ 40 } color={ color } height={40} bottom={-15}/>
 			)
 		}}  />
     	</Tab.Navigator>
@@ -117,9 +119,20 @@ const MainNavigator = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+	flex: 1,
 	flexDirection: 'column',
-  }
+	
+  },
+  tab: {
+	  height: 30,
+	  paddingVertical: 0,
+	  fontSize: 20,
+	  fontFamily: "Bellota",
+	  bottom: 10,
+	},
+  tabWhole: {
+	  backgroundColor: "#000000",
+  },
 })
 
 export default MainNavigator;
