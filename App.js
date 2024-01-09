@@ -30,8 +30,11 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider onLayout={onLayout}>
+    <SafeAreaProvider 
+	  onLayout={onLayout}> 
+	<SafeAreaView style={styles.container} onLayout={onLayout}>
 		<AppNavigator />
+	 </SafeAreaView> 
     </SafeAreaProvider>
   );
 }
@@ -39,7 +42,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     fontFamily: "Bellota",
   },
 	label : {

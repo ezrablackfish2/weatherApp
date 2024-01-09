@@ -1,13 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, ImageBackground, Dimensions } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import backgroundImage from "../assets/images/weather.png";
+
 
 
 
 const DetailForecastScreen = props => {
 	// this function shows detailed weather of that day up to 5 days from mock API
     
-    return <View style={styles.container}>
+    return (
+	<SafeAreaView 
+		edges={["right", "left", "bottom"]}
+	    style={styles.container}>
 		<ImageBackground 
 		source={backgroundImage}
 		style={styles.backgroundImage}
@@ -17,7 +23,8 @@ const DetailForecastScreen = props => {
 		<View>
 		<Button style={styles.settingsbutton} title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
 		</View>
-    </View>
+    </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({

@@ -7,8 +7,8 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Weather.jpg",
-      "resizeMode": "cover",
+      "image": "./assets/Cloud.png",
+      "resizeMode": "stretch",
       "width": "5",
       "height": "5",
       "backgroundColor": "#ffffff"

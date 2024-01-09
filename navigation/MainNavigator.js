@@ -3,6 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
+
 import WeatherForecastScreen from "../screens/WeatherForecastScreen";
 import LocationSelectionScreen from "../screens/LocationSelectionScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -18,10 +21,15 @@ const Tab = createBottomTabNavigator(); // this declares a tab navigator
 
 const TabNavigator = () => {
 	return (
+	<SafeAreaView 
+		edges={["right", "left", "bottom"]}
+	    style={styles.container}>
+
 	<Tab.Navigator 
 		screenOptions={{
 			headerTitle: '',
 			headerShadowVisible: false,
+			headerShown: false,
 		}}>
       		<Tab.Screen name="DetailForecast" component={DetailForecastScreen} options={{
 			tabBarLabel: "Today Weather",
@@ -42,6 +50,7 @@ const TabNavigator = () => {
 			)
 		}}  />
     	</Tab.Navigator>
+	</SafeAreaView>	
 	)
 }
 
@@ -49,7 +58,9 @@ const TabNavigator = () => {
 
 const MainNavigator = (props) => {
 	return(
-          <Stack.Navigator>
+	<Stack.Navigator 
+		screenOptions={{ headerShown: false }}
+		>
             <Stack.Screen name="Home" component={TabNavigator} options={{
 		    	headerTitle: "",
 		    	gestureEnabled: true,
@@ -102,5 +113,13 @@ const MainNavigator = (props) => {
           </Stack.Navigator>
 	);
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+	flexDirection: 'column',
+  }
+})
 
 export default MainNavigator;
