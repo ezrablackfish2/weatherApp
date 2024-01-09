@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
 import backgroundImage from "../assets/images/weather.png";
+import generalImage from "../assets/images/sunny.jpg";
 
 
 
@@ -24,6 +25,17 @@ const DetailForecastScreen = props => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
+	    	<View style={styles.generalHome}>
+	    	<ImageBackground 
+		source={generalImage}
+		style={styles.backgroundImageGeneral}
+		resizeMode="stretch"
+		>
+	    	<Text style={styles.generalTemp}>
+	    	10 C
+	    	</Text>
+	    	</ImageBackground>
+	    	</View>
 		<TouchableOpacity 
 	    	style={styles.settingsbutton} 
 	    	title="Settings" 
@@ -57,6 +69,41 @@ const styles = StyleSheet.create({
 		height: "100%",
 		
 	},
+	backgroundImageGeneral: {
+		width: "100%",
+		height: "100%",
+		borderRadius: 20,
+		opacity: 0.6,
+	},
+	generalHome: {
+		position: "absolute",
+		left: 20,
+		top: 20,
+		width: "80%",
+		height: "35%",
+		borderRadius: 20,
+		opacity: 1,
+		backgroundColor: "#000000",
+		overflow: "hidden",
+	},
+	generalContent: {
+		position: "absolute",
+		left: 0,
+		top: 0,
+		width: "100%",
+		height: "100%",
+	},
+	generalTemp: {
+		color: "#000000",
+		position: "relative",
+		width: "30%",
+		height: "35%",
+		fontSize: 90,
+		fontFamily: "BlackOps",
+    		fontWeight: 'bold',
+    		color: 'white', 
+    		textAlign: 'center',
+	}
 });
 
 export default DetailForecastScreen;
