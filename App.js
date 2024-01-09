@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import AppNavigator from "./navigation/AppNavigator.js";
 import { loadFonts } from './fonts.js';
+import 'react-native-gesture-handler';
 
 
 

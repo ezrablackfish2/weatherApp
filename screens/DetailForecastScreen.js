@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, Button, ImageBackground, Dimensions } from 'rea
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import backgroundImage from "../assets/images/weather.png";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import SettingsScreen from "./SettingsScreen";
+import AboutScreen from "./AboutScreen";
+const Drawer = createDrawerNavigator();
 
 
 
@@ -14,12 +18,13 @@ const DetailForecastScreen = props => {
 	<SafeAreaView 
 		edges={["right", "left", "bottom"]}
 	    style={styles.container}>
+
 		<ImageBackground 
 		source={backgroundImage}
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
-		<Button style={styles.settingsbutton} title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
+		<Button style={styles.settingsbutton} title="Settings" onPress={() => { props.navigation.toggleDrawer() }}/>{/* this directs the user to the weather setting screen */}
 		</ImageBackground>
     </SafeAreaView>
     );
