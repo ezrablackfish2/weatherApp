@@ -1,17 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, ImageBackground, Dimensions } from 'react-native';
-import backgroundImage from "../assets/images/forecast.jpg";
+import backgroundImage from "../assets/images/forecast.webp";
 
 
 const WeatherForecastScreen = props => {
 	// this function shows weather up to 5 days from mock API
     
     return <View style={styles.container}>
-		<ImageBackground source={backgroundImage} style={{ width: screenWidth, aspectRatio: 16 / 9 }}>	
-        <Text>Weather Forecasing screen</Text>
+		<ImageBackground 
+		source={backgroundImage} 
+		style={styles.backgroundImage}
+		resizeMode="stretch"
+		>	
 
-	<Button title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
 		</ImageBackground>
+		<View>
+			<Button title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
+		</View>
     </View>
 };
 
@@ -26,10 +31,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	backgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    width: screenWidth,
-    height: screenHeight,
-    resizeMode: 'cover',
+    		width: "100%",
+		height: "100%",
 	},
 });
 

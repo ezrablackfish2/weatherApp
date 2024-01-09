@@ -3,14 +3,16 @@ import { View, Text, StyleSheet, Button, ImageBackground, Dimensions } from 'rea
 
 import backgroundImage from "../assets/images/about.jpg";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const AboutScreen = props => {
 	// this function tells us about the weather app
     
     return <View style={styles.container}>
-		<ImageBackground source={backgroundImage} style={{ width: screenWidth, aspectRatio: 16 / 9 }}>
-        <Text>about screen</Text>
+		<ImageBackground 
+		source={backgroundImage}
+		style={styles.backgroundImage}
+		resizeMode="stretch"
+		>
 	</ImageBackground>
     </View>
 };
@@ -25,8 +27,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	backgroundImage: {
-		position: "absolute",
-		width: "screenWidth",
+		width: "100%",
+		height: "100%",
 	}
 });
 
