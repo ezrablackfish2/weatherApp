@@ -30,8 +30,8 @@ const DrawerNavigator = () => {
 			headerTitle: '',
 			headerShadowVisible: false,
 			headerShown: false,
-			tabBarLabelStyle: styles.tab,
-			tabBarStyle: styles.tabWhole,
+			drawerStyle: styles.drawWhole,
+			drawerLabelStyle: styles.draw,
 		}}
 		defaultStatus={drawerOpen}
 		>
@@ -157,6 +157,14 @@ const styles = StyleSheet.create({
   tabWhole: {
 	  backgroundColor: "#000000",
   },
+  draw: {
+	color: "#ffffff",
+	fontSize: 20,
+	fontFamily: "Bellota",
+  },
+  drawWhole: {
+	  backgroundColor: "#000000",
+  }
 })
 
 export default MainNavigator;

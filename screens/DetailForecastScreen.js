@@ -28,7 +28,7 @@ const DetailForecastScreen = props => {
 	    	style={styles.settingsbutton} 
 	    	title="Settings" 
 	    	onPress={() => { props.navigation.toggleDrawer() }}>{/* this directs the user to the weather setting screen */}
-	    	<Feather name="menu" size={30} color="#ffbbff" />
+	    	<Feather name="menu" size={30} color="#ffffff" />
 	    	</TouchableOpacity>
 		</ImageBackground>
     </SafeAreaView>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		right: 5,
 		top: 5,
-		backgroundColor: "#175EfB",
+		backgroundColor: "#000000",
 		borderRadius: 50,
 		padding: 10,
 	},
