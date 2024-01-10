@@ -8,6 +8,8 @@ import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
 import backgroundImage from "../assets/images/weather.png";
 import generalImage from "../assets/images/sunny.jpg";
+import colors from "../colors.js";
+import { Entypo } from '@expo/vector-icons';
 
 
 
@@ -32,7 +34,10 @@ const DetailForecastScreen = props => {
 		resizeMode="stretch"
 		>
 	    	<Text style={styles.generalTemp}>
-	    	10 C
+	    	10 °C
+	    	</Text>
+	    	<Text style={styles.generalPlace}>
+	    	Addis Ababa, Ethiopia
 	    	</Text>
 	    	</ImageBackground>
 	    	</View>
@@ -40,8 +45,16 @@ const DetailForecastScreen = props => {
 	    	style={styles.settingsbutton} 
 	    	title="Settings" 
 	    	onPress={() => { props.navigation.toggleDrawer() }}>{/* this directs the user to the weather setting screen */}
-	    	<Feather name="menu" size={30} color="#ffffff" />
+	    	<Feather name="menu" size={30} color={colors.l} />
 	    	</TouchableOpacity>
+		<TouchableOpacity 
+	    	style={styles.locationButton} 
+	    	title="Settings" 
+	    	onPress={() => { console.log("location Pressed")}}
+	    	>
+	    	<Entypo name="location" size={30} color={colors.l} />
+	    	</TouchableOpacity>
+
 		</ImageBackground>
     </SafeAreaView>
     );
@@ -58,22 +71,25 @@ const styles = StyleSheet.create({
 	},
 	settingsbutton : {
 		position: "absolute",
-		right: 5,
+		right: 10,
 		top: 5,
 		backgroundColor: "#000000",
+		backgroundColor: colors.lightBlue,
+		backgroundColor: colors.lightGreen,
 		borderRadius: 50,
 		padding: 10,
 	},
 	backgroundImage: {
 		width: "100%",
 		height: "100%",
+		opacity: 1,
 		
 	},
 	backgroundImageGeneral: {
 		width: "100%",
 		height: "100%",
 		borderRadius: 20,
-		opacity: 0.6,
+		opacity: 1,
 	},
 	generalHome: {
 		position: "absolute",
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
 		height: "35%",
 		borderRadius: 20,
 		opacity: 1,
-		backgroundColor: "#000000",
+		backgroundColor: colors.black,
 		overflow: "hidden",
 	},
 	generalContent: {
@@ -94,16 +110,31 @@ const styles = StyleSheet.create({
 		height: "100%",
 	},
 	generalTemp: {
-		color: "#000000",
 		position: "relative",
-		width: "30%",
+		width: "60%",
 		height: "35%",
 		fontSize: 90,
 		fontFamily: "BlackOps",
-    		fontWeight: 'bold',
-    		color: 'white', 
-    		textAlign: 'center',
-	}
+    		color: colors.darkBlue, 
+    		color: colors.lightGreen, 
+	},
+	generalPlace: {
+		position: "relative",
+		width: "70%",
+		height: "35%",
+		fontSize: 20,
+		fontFamily: "BlackOps",
+		color: colors.darkBlue,
+    		color: colors.lightGreen, 
+	},
+	locationButton: {
+		position: "absolute",
+		top: 65,
+		right: 10,
+		backgroundColor: colors.lightGreen,
+		padding: 10,
+		borderRadius: 50,
+	},
 });
 
 export default DetailForecastScreen;
