@@ -7,7 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
 import backgroundImage from "../assets/images/weather.png";
-import generalImage from "../assets/images/sunny.jpg";
+import generalImage from "../assets/images/sunny.png";
 import colors from "../colors.js";
 import { Entypo } from '@expo/vector-icons';
 
@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		left: 20,
 		top: 20,
-		width: "80%",
-		height: "35%",
+		width: "70%",
+		height: "40%",
 		borderRadius: 20,
 		opacity: 1,
-		backgroundColor: colors.black,
 		overflow: "hidden",
+//		backgroundColor: colors.white,
 	},
 	generalContent: {
 		position: "absolute",
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 	},
 	generalTemp: {
 		position: "relative",
-		width: "60%",
+		width: "70%",
 		height: "35%",
 		fontSize: 90,
 		fontFamily: "BlackOps",
