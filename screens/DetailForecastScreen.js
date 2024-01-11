@@ -1,22 +1,48 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import axios from 'axios';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
+
+
+import weatherData from "../weatherData.json";
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
 import backgroundImage from "../assets/images/weather.png";
 import generalImage from "../assets/images/sunny.png";
 import colors from "../colors.js";
-import { Entypo } from '@expo/vector-icons';
 
 
 
 
 const DetailForecastScreen = props => {
 	// this function shows detailed weather of that day up to 5 days from mock API
-    
+
+	const [data, setData] = useState([]);
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+	
+	const fetchData = async() => {
+		try {
+			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData');
+			setData(response.data);
+		}
+		catch (error) {
+			console.error("Error Fetching Weather data", error);
+		}
+	};
+
+
+
+
     return (
 	<SafeAreaView 
 		edges={["right", "left", "bottom"]}
@@ -55,10 +81,49 @@ const DetailForecastScreen = props => {
 	    	<Entypo name="location" size={30} color={colors.l} />
 	    	</TouchableOpacity>
 
+	    	<View style={styles.detailHome}>
+	    	<Text style={styles.detailTitle}>Detail
+	    	</Text>
+
+		<View>
+		
+		{data.map((item, index) => (
+		<View key={index} style={styles.table}>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color="black" />
+        			</View>
+          				<Text style={styles.cell}>Temperature Average</Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color="black" />
+        			</View>
+
+          				<Text style={styles.cell}>{item.weather}</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.min} C</Text>
+
+				<Text style={styles.cell}> {item.humidity}</Text>
+			</View>
+        	</View>
+      	))}
+
+		</View>
+
+
+
+	    	</View>
+
 		</ImageBackground>
     </SafeAreaView>
     );
 };
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -115,8 +180,8 @@ const styles = StyleSheet.create({
 		height: "35%",
 		fontSize: 90,
 		fontFamily: "BlackOps",
-    		color: colors.darkBlue, 
     		color: colors.lightGreen, 
+    		color: colors.darkBlue, 
 	},
 	generalPlace: {
 		position: "relative",
@@ -124,8 +189,8 @@ const styles = StyleSheet.create({
 		height: "35%",
 		fontSize: 20,
 		fontFamily: "BlackOps",
-		color: colors.darkBlue,
     		color: colors.lightGreen, 
+		color: colors.darkBlue,
 	},
 	locationButton: {
 		position: "absolute",
@@ -135,6 +200,44 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 50,
 	},
+	detailHome: {
+		position: "absolute",
+		left: 30,
+		bottom: 40,
+		height: "50%",
+		width: "80%",
+		backgroundColor: colors.lightGreen,
+		padding: 25,
+		borderRadius: 50,
+		opacity: 0.75,
+	},
+	detailTitle: {
+		position: "relative",
+		width: "50%",
+		fontFamily: "Lilita",
+		fontSize: 35,
+		color: colors.white,
+	},
+
+	table: {
+    		flexDirection: 'column',
+    		borderWidth: 0, 
+ 		borderColor: 'transparent',
+  	},
+  	row: {
+    		flexDirection: 'row',
+  	},
+  	cell: {
+    		flex: 1,
+    		padding: 10,
+    		textAlign: 'center',
+  	},
+	mergedCell: {
+		flexDirection: 'column',
+		justifyContent: 'center', // Align content vertically in the merged cell
+		borderRightWidth: 0, // Remove border between merged cells
+		width: "10%",
+	}
 });
 
 export default DetailForecastScreen;

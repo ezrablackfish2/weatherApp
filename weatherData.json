@@ -1,0 +1,19 @@
+[
+	{
+		"id": 1,
+		"weather": "sunny",
+		"min": 6,
+		"max": 15,
+		"chance": "0%",
+		"avg": "10",
+		"wind": "17",
+		"humidity": "20%",
+		"cloudCover": "5%",
+		"pressure": "1",
+		"UV": "0",
+		"dew": "5",
+		"sunRise": "5:57AM",
+		"sunset": "6:03PM",
+		"visibility": "10"
+	}
+]
