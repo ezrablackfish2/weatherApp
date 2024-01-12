@@ -11,6 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 
 
 import SettingsScreen from "./SettingsScreen";
@@ -39,6 +40,8 @@ const DetailForecastScreen = props => {
 
 	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
+	const [selectedCity, setSelectedCity] = useState('');
+	const [selectedCountry, setSelectedCountry] = useState('');
 
 	const toggleShower = () => {
 		setShower(!shower);
@@ -74,6 +77,7 @@ const DetailForecastScreen = props => {
 		}
 	};
 
+
 const setBackgroundImage = () => {
     if (data && data.length > 0) {
       const firstWeatherItem = data[0];
@@ -83,8 +87,9 @@ const setBackgroundImage = () => {
         return weatherDict[weather];
       }
     }
-    return backgroundImage;
-}	
+    return sunny;
+}
+
 
 
     return (
@@ -105,16 +110,20 @@ const setBackgroundImage = () => {
 		resizeMode="stretch"
 		>
 	    	{data.map((item, index) => (
+		<>
 	    	<Text 
 		key={index}
 		style={styles.generalTemp}
 		>
 	    	{item.avg}° C
 	    	</Text>
-		))}
-	    	<Text style={styles.generalPlace}>
-	    	Addis Ababa, Ethiopia
+		<Text 
+			key={item.id}
+			style={styles.generalPlace}>
+		{item.city}, {item.country}
 	    	</Text>
+		</>
+		))}
 	    	</ImageBackground>
 	    	</View>
 		<TouchableOpacity 
@@ -126,9 +135,20 @@ const setBackgroundImage = () => {
 		<TouchableOpacity 
 	    	style={styles.locationButton} 
 	    	title="Settings" 
-	    	onPress={() => { console.log("location Pressed")}}
 	    	>
-	    	<Entypo name="location" size={30} color={colors.l} />
+
+	<Picker
+        selectedValue={selectedCity}
+        onValueChange={(itemValue) => setSelectedCity(itemValue)}>
+
+        {data.map((item, index) => (
+          <Picker.Item key={item.city} label={`${item.country} - ${item.city}`} value={item.city} />
+        ))}
+	</Picker>	
+
+	
+
+	    	<Entypo name="location" size={30} color={colors.l} bottom={55} left={0}/>
 	    	</TouchableOpacity>
 
 	    	<View style={ shower ? styles.detailHomeShow : styles.detailHomeHide}>
@@ -361,7 +381,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontFamily: "BlackOps",
     		color: colors.lightGreen, 
-		color: colors.darkBlue,
+		color: colors.white,
 	},
 	locationButton: {
 		position: "absolute",
@@ -370,6 +390,8 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.lightGreen,
 		padding: 10,
 		borderRadius: 50,
+		width: 50,
+		height: 50,
 	},
 	detailHomeShow: {
 		position: "absolute",
