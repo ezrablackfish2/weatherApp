@@ -79,16 +79,18 @@ const DetailForecastScreen = props => {
 
 
 const setBackgroundImage = () => {
-    if (data && data.length > 0) {
-      const firstWeatherItem = data[0];
-      const { id, weather } = firstWeatherItem;
+  if (data && data.length > 0) {
+    const weatherItem = data.find((item) => item.city === selectedCity);
 
-      if ( 1 && weatherDict[weather]) {
+    if (weatherItem) {
+      const { weather } = weatherItem;
+      if (weatherDict[weather]) {
         return weatherDict[weather];
       }
     }
-    return sunny;
-}
+  }
+return sunny;
+};	
 
 
 
@@ -112,19 +114,17 @@ const setBackgroundImage = () => {
 	    	{data
 			.filter((item) => item.city === selectedCity)
 			.map((item, index) => (
-		<>
+		<React.Fragment key={item.id}>
 	    	<Text 
-		key={index}
 		style={styles.generalTemp}
 		>
 	    	{item.avg}° C
 	    	</Text>
 		<Text 
-			key={item.id}
 			style={styles.generalPlace}>
 		{item.city}, {item.country}
 	    	</Text>
-		</>
+		</React.Fragment>
 		))}
 	    	</ImageBackground>
 	    	</View>
