@@ -7,8 +7,10 @@ import { Entypo } from '@expo/vector-icons';
 import axios from 'axios';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-
+import { FontAwesome } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 import weatherData from "../weatherData.json";
@@ -107,110 +109,110 @@ const DetailForecastScreen = props => {
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.max}° C| {item.min}° C</Text>
 
 				<Text style={styles.cell}> {item.weather}</Text>
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+				<FontAwesome name="thermometer-2" size={27} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>   Max | Min </Text>
+          				<Text style={styles.cell}>   average </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+				<FontAwesome5 name="umbrella" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>Weather Type</Text>
+          				<Text style={styles.cell}>Chance</Text>
           			
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.avg}° C</Text>
 
-				<Text style={styles.cell}> {item.weather}</Text>
+				<Text style={styles.cell}> {item.chance}%</Text>
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+				<Feather name="wind" size={24} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>   Max | Min </Text>
+          				<Text style={styles.cell}>   Wind Speed </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+				<MaterialCommunityIcons name="car-brake-low-pressure" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>Weather Type</Text>
+          				<Text style={styles.cell}>Pressure</Text>
           			
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.wind} km/hr</Text>
 
-				<Text style={styles.cell}> {item.weather}</Text>
+				<Text style={styles.cell}> {item.pressure} hPa</Text>
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+				<Entypo name="drop" size={24} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>   Max | Min </Text>
+          				<Text style={styles.cell}>Humidity </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+				<SimpleLineIcons name="eyeglass" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>Weather Type</Text>
+          				<Text style={styles.cell}>UV index</Text>
           			
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.humidity}%</Text>
 
-				<Text style={styles.cell}> {item.weather}</Text>
+				<Text style={styles.cell}> {item.UV}</Text>
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+				<AntDesign name="cloud" size={24} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>   Max | Min </Text>
+          				<Text style={styles.cell}>Cloud Cover </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+				<MaterialCommunityIcons name="sun-thermometer" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>Weather Type</Text>
+          				<Text style={styles.cell}>Dew Point</Text>
           			
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.cloudCover}%</Text>
 
-				<Text style={styles.cell}> {item.weather}</Text>
+				<Text style={styles.cell}> {item.dew}° C</Text>
 			</View>
 
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+				<AntDesign name="eye" size={24} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>   Max | Min </Text>
+          				<Text style={styles.cell}>Visibility </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+				<Feather name="sunrise" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>Weather Type</Text>
+          				<Text style={styles.cell}>Sun Rise</Text>
           			
 			</View>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+				<Text style={styles.cell}>{item.Visibility} km/hr</Text>
 
-				<Text style={styles.cell}> {item.weather}</Text>
+				<Text style={styles.cell}> {item.Sunrise}</Text>
 			</View>
 
 
