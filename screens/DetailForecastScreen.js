@@ -84,6 +84,8 @@ const DetailForecastScreen = props => {
 	    	<View style={styles.detailHome}>
 	    	<Text style={styles.detailTitle}>Detail
 	    	</Text>
+	    	<Text style={styles.detailSubtitle}> Weather Now
+	    	</Text>
 
 		<View>
 		
@@ -91,11 +93,11 @@ const DetailForecastScreen = props => {
 		<View key={index} style={styles.table}>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
-				<FontAwesome5 name="temperature-high" size={24} color="black" />
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
         			</View>
-          				<Text style={styles.cell}>Temperature Average</Text>
+          				<Text style={styles.cell}>   Max | Min </Text>
 				<View style={styles.mergedCell}>
-				<MaterialCommunityIcons name="weather-cloudy" size={24} color="black" />
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
         			</View>
 
           				<Text style={styles.cell}>{item.weather}</Text>
@@ -105,7 +107,7 @@ const DetailForecastScreen = props => {
 				<View style={styles.mergedCell}>
         			</View>
 
-				<Text style={styles.cell}>{item.min} C</Text>
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
 
 				<Text style={styles.cell}> {item.humidity}</Text>
 			</View>
@@ -223,6 +225,7 @@ const styles = StyleSheet.create({
     		flexDirection: 'column',
     		borderWidth: 0, 
  		borderColor: 'transparent',
+		margin: -5,
   	},
   	row: {
     		flexDirection: 'row',
@@ -230,14 +233,23 @@ const styles = StyleSheet.create({
   	cell: {
     		flex: 1,
     		padding: 10,
+		paddingVertical: 7,
     		textAlign: 'center',
+		fontFamily: "Lilita",
+		color: colors.white,
   	},
 	mergedCell: {
 		flexDirection: 'column',
-		justifyContent: 'center', // Align content vertically in the merged cell
-		borderRightWidth: 0, // Remove border between merged cells
+		justifyContent: 'center',
+		alignItems: "center",
+		top: 25,
+		borderRightWidth: 0,
 		width: "10%",
-	}
+	},
+	detailSubtitle: {
+		fontFamily: "Lilita",
+		color: colors.white,
+	},
 });
 
 export default DetailForecastScreen;
