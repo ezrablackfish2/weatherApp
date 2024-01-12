@@ -61,9 +61,14 @@ const DetailForecastScreen = props => {
 		style={styles.backgroundImageGeneral}
 		resizeMode="stretch"
 		>
-	    	<Text style={styles.generalTemp}>
-	    	10 °C
+	    	{data.map((item, index) => (
+	    	<Text 
+		key={index}
+		style={styles.generalTemp}
+		>
+	    	{item.avg}° C
 	    	</Text>
+		))}
 	    	<Text style={styles.generalPlace}>
 	    	Addis Ababa, Ethiopia
 	    	</Text>
