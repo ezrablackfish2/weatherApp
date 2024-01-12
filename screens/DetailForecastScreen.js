@@ -13,11 +13,22 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-import weatherData from "../weatherData.json";
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
 import backgroundImage from "../assets/images/weather.png";
-import generalImage from "../assets/images/sunny.png";
+import sunny from "../assets/images/sunny.png";
+import blizzard from "../assets/images/blizzard.png";
+import cloudy from "../assets/images/cloudy.png";
+import cyclone from "../assets/images/cyclone.png";
+import drizzle from "../assets/images/drizzle.png";
+import foggy from "../assets/images/foggy.png";
+import misty from "../assets/images/misty.png";
+import snowy from "../assets/images/snowy.png";
+import sunnyCloud from "../assets/images/sunnyCloud.png";
+import thunderstorm from "../assets/images/thunderstorm.png";
+import tornado from "../assets/images/tornado.png";
+import windy from "../assets/images/windy.png";
+import rainy from "../assets/images/rainy.png";
 import colors from "../colors.js";
 
 
@@ -31,6 +42,22 @@ const DetailForecastScreen = props => {
 
 	const toggleShower = () => {
 		setShower(!shower);
+	}
+
+	const weatherDict = {
+		"sunny": sunny,
+		"blizzard": blizzard,
+		"cloudy": cloudy,
+		"cyclone": cyclone,
+		"drizzle": drizzle,
+		"foggy": foggy,
+		"misty": misty,
+		"snowy": snowy,
+		"sunnyCloud":sunnyCloud,
+		"thunderstorm": thunderstorm,
+		"tornado": tornado,
+		"windy": windy,
+		"rainy": rainy
 	}
 
 	useEffect(() => {
@@ -47,7 +74,17 @@ const DetailForecastScreen = props => {
 		}
 	};
 
+const setBackgroundImage = () => {
+    if (data && data.length > 0) {
+      const firstWeatherItem = data[0];
+      const { id, weather } = firstWeatherItem;
 
+      if ( 1 && weatherDict[weather]) {
+        return weatherDict[weather];
+      }
+    }
+    return backgroundImage;
+}	
 
 
     return (
@@ -62,7 +99,8 @@ const DetailForecastScreen = props => {
 		>
 	    	<View style={styles.generalHome}>
 	    	<ImageBackground 
-		source={generalImage}
+		source={setBackgroundImage()}
+//	    	source={sunny}
 		style={styles.backgroundImageGeneral}
 		resizeMode="stretch"
 		>
@@ -336,7 +374,7 @@ const styles = StyleSheet.create({
 	detailHomeShow: {
 		position: "absolute",
 		left: 30,
-		bottom: 40,
+		bottom: 20,
 		height: "53%",
 		width: "80%",
 		backgroundColor: colors.lightGreen,
@@ -347,7 +385,7 @@ const styles = StyleSheet.create({
 	detailHomeHide: {
 		position: "absolute",
 		left: 30,
-		bottom: 290,
+		bottom: 270,
 		height: "25%",
 		width: "80%",
 		backgroundColor: colors.lightGreen,
