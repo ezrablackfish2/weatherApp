@@ -100,7 +100,7 @@ const DetailForecastScreen = props => {
 				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
         			</View>
 
-          				<Text style={styles.cell}>{item.weather}</Text>
+          				<Text style={styles.cell}>Weather Type</Text>
           			
 			</View>
 			<View style={styles.row}>
@@ -109,8 +109,112 @@ const DetailForecastScreen = props => {
 
 				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
 
-				<Text style={styles.cell}> {item.humidity}</Text>
+				<Text style={styles.cell}> {item.weather}</Text>
 			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+        			</View>
+          				<Text style={styles.cell}>   Max | Min </Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+        			</View>
+
+          				<Text style={styles.cell}>Weather Type</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+
+				<Text style={styles.cell}> {item.weather}</Text>
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+        			</View>
+          				<Text style={styles.cell}>   Max | Min </Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+        			</View>
+
+          				<Text style={styles.cell}>Weather Type</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+
+				<Text style={styles.cell}> {item.weather}</Text>
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+        			</View>
+          				<Text style={styles.cell}>   Max | Min </Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+        			</View>
+
+          				<Text style={styles.cell}>Weather Type</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+
+				<Text style={styles.cell}> {item.weather}</Text>
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+        			</View>
+          				<Text style={styles.cell}>   Max | Min </Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+        			</View>
+
+          				<Text style={styles.cell}>Weather Type</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+
+				<Text style={styles.cell}> {item.weather}</Text>
+			</View>
+
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+				<FontAwesome5 name="temperature-high" size={24} color={colors.white} />
+        			</View>
+          				<Text style={styles.cell}>   Max | Min </Text>
+				<View style={styles.mergedCell}>
+				<MaterialCommunityIcons name="weather-cloudy" size={24} color={colors.white} />
+        			</View>
+
+          				<Text style={styles.cell}>Weather Type</Text>
+          			
+			</View>
+			<View style={styles.row}>
+				<View style={styles.mergedCell}>
+        			</View>
+
+				<Text style={styles.cell}>{item.max} | {item.min} C</Text>
+
+				<Text style={styles.cell}> {item.weather}</Text>
+			</View>
+
+
+
         	</View>
       	))}
 
@@ -206,7 +310,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		left: 30,
 		bottom: 40,
-		height: "50%",
+		height: "53%",
 		width: "80%",
 		backgroundColor: colors.lightGreen,
 		padding: 25,
