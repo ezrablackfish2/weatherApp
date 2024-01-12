@@ -109,7 +109,9 @@ const setBackgroundImage = () => {
 		style={styles.backgroundImageGeneral}
 		resizeMode="stretch"
 		>
-	    	{data.map((item, index) => (
+	    	{data
+			.filter((item) => item.city === selectedCity)
+			.map((item, index) => (
 		<>
 	    	<Text 
 		key={index}
@@ -171,7 +173,9 @@ const setBackgroundImage = () => {
 
 		<View>
 		
-		{data.map((item, index) => (
+		{data
+			.filter((item) => item.city === selectedCity)
+			.map((item, index) => (
 		<View key={index} style={styles.table}>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
