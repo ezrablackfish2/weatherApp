@@ -27,6 +27,11 @@ const DetailForecastScreen = props => {
 	// this function shows detailed weather of that day up to 5 days from mock API
 
 	const [data, setData] = useState([]);
+	const [shower, setShower] = useState(false);
+
+	const toggleShower = () => {
+		setShower(!shower);
+	}
 
 	useEffect(() => {
 		fetchData();
@@ -88,11 +93,23 @@ const DetailForecastScreen = props => {
 	    	<Entypo name="location" size={30} color={colors.l} />
 	    	</TouchableOpacity>
 
-	    	<View style={styles.detailHome}>
+	    	<View style={ shower ? styles.detailHomeShow : styles.detailHomeHide}>
 	    	<Text style={styles.detailTitle}>Detail
 	    	</Text>
-	    	<Text style={styles.detailSubtitle}> Weather Now
+	    	<Text style={styles.detailSubtitle}> Weather Now                                                                        
 	    	</Text>
+	    {!shower && (<TouchableOpacity 
+	    		style={styles.shower}
+	    		onPress={toggleShower}>
+			<Entypo name="arrow-with-circle-down" size={24} color={colors.white} />
+	    	</TouchableOpacity>)}
+
+		{shower && (<TouchableOpacity 
+	    		style={styles.shower}
+	    		onPress={toggleShower}>
+			<Entypo name="arrow-with-circle-up" size={24} color={colors.white} />
+	    	</TouchableOpacity>)}
+	
 
 		<View>
 		
@@ -138,6 +155,8 @@ const DetailForecastScreen = props => {
 
 				<Text style={styles.cell}> {item.chance}%</Text>
 			</View>
+			{ shower && (
+			<>
 			<View style={styles.row}>
 				<View style={styles.mergedCell}>
 				<Feather name="wind" size={24} color={colors.white} />
@@ -219,7 +238,8 @@ const DetailForecastScreen = props => {
 
 				<Text style={styles.cell}> {item.Sunrise}</Text>
 			</View>
-
+			</>
+			)}
 
 
         	</View>
@@ -313,7 +333,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 50,
 	},
-	detailHome: {
+	detailHomeShow: {
 		position: "absolute",
 		left: 30,
 		bottom: 40,
@@ -324,6 +344,18 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		opacity: 0.75,
 	},
+	detailHomeHide: {
+		position: "absolute",
+		left: 30,
+		bottom: 290,
+		height: "25%",
+		width: "80%",
+		backgroundColor: colors.lightGreen,
+		padding: 25,
+		borderRadius: 50,
+		opacity: 0.75,
+	},
+
 	detailTitle: {
 		position: "relative",
 		width: "50%",
@@ -360,6 +392,11 @@ const styles = StyleSheet.create({
 	detailSubtitle: {
 		fontFamily: "Lilita",
 		color: colors.white,
+	},
+	shower: {
+		position: "absolute",
+		right: 45,
+		top: 30,
 	},
 });
 
