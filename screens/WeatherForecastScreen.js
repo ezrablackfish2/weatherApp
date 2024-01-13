@@ -148,7 +148,15 @@ useEffect(() => {
 //	
 //
 //	console.log(JSON.stringify(randomData));
-	
+
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  for (let i = 0; i < barChartData.length; i++) {
+    const dateObject = new Date(barChartData[i].label);
+    const dayOfWeek = daysOfWeek[dateObject.getDay()];
+    barChartData[i].label = dayOfWeek;
+  }
+
 
 	const xDomain = barChartData.map((xDataPoint) => xDataPoint.label)
 	const xRange = [0, graphWidth]
