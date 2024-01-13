@@ -55,7 +55,7 @@ const WeatherForecastScreen = props => {
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
 	const animationState = useValue(0);
-	const [randomData, setRandomData] = useState([]);
+//	const [randomData, setRandomData] = useState([]);
 
 	const weatherDict = {
 		"sunny": sunny,
@@ -112,58 +112,45 @@ useEffect(() => {
 	      setFilteredData(futureCityData);
 
 	      if (futureCityData.length > 0) {
-	        const futureWeatherTypes = futureCityData.map((item) => item.weather);
-	        console.log(`Weather forecast for the next 5 days in ${selectedCity}:`, futureWeatherTypes);
-		const averageTemperatures = futureCityData.map((item) => item.avg);
-	
-	          // Set up data for the bar chart
-	          setBarChartData({
-	            labels: futureWeatherTypes,
-	            datasets: [
-	              {
-	                data: averageTemperatures,
-	              },
-	            ],
-	          });
+          const ChartData = futureCityData.map((item) => ({
+            label: item.date, // assuming item.date is the label
+            value: item.avg,
+          }));
+
+          // Set up data for the bar chart
+          setBarChartData(ChartData);
 	      }
 	    }
 	  }
 	}, [data, selectedCity, todayDateString]);
 	
 	
-	const [barChartData, setBarChartData] = useState({
-	    labels: [],
-	    datasets: [
-	      {
-	        data: [],
-	      },
-	    ],
-	  });
+	const [barChartData, setBarChartData] = useState([]);
 	console.log(JSON.stringify(barChartData));
 
-//	const randomData = [
-//		{label: 'Mon', value: 50},
-//		{label: 'Teu', value: 100},
-//		{label: 'Wed', value: 150},
-//		{label: 'Thu', value: 200},
-//		{label: 'Fri', value: 250},
-//	]
+	const randomData = [
+		{label: 'Mon', value: 50},
+		{label: 'Teu', value: 100},
+		{label: 'Wed', value: 150},
+		{label: 'Thu', value: 200},
+		{label: 'Fri', value: 250},
+	]
 	
-	useEffect(() => {
-
-	const transformedData = barChartData.labels.map((label, index) => ({
-      label,
-      value: barChartData.datasets[0].data[index],
-    }));
-	setRandomData(transformedData);
-
-	}, [barChartData]);
+//	useEffect(() => {
+//
+//	const transformedData = barChartData.labels.map((label, index) => ({
+//      label,
+//      value: barChartData.datasets[0].data[index],
+//    }));
+//	setRandomData(transformedData);
+//
+//	}, [barChartData]);
+//	
+//
+//	console.log(JSON.stringify(randomData));
 	
 
-	console.log(JSON.stringify(randomData));
-	
-
-	const xDomain = randomData.map((xDataPoint) => xDataPoint.label)
+	const xDomain = barChartData.map((xDataPoint) => xDataPoint.label)
 	const xRange = [0, graphWidth]
 	const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1);
 
@@ -171,27 +158,27 @@ useEffect(() => {
 
 	const yDomain = [
 		0,
-		d3.max(randomData, (yDataPoint) => yDataPoint.value)
+		d3.max(barChartData, (yDataPoint) => yDataPoint.value)
 	]
 	const yRange = [0, graphHeight]
 	const y = d3.scaleLinear().domain(yDomain).range(yRange);
 
 	const graphPath = useComputedValue(() => {
-		const newPath = Skia.Path.Make();
+    const newPath = Skia.Path.Make();
 
-		randomData.forEach((dataPoint) => {
-			const rect = Skia.XYWHRect(
-				x(dataPoint.label) - GRAPH_BAR_WIDTH / 2,
-				graphHeight,
-				GRAPH_BAR_WIDTH,
-				y(dataPoint.value * animationState.current) * -1 
-			)
+    barChartData.forEach((dataPoint) => {
+        const rect = Skia.XYWHRect(
+            x(dataPoint.label) - GRAPH_BAR_WIDTH / 2,
+            graphHeight,
+            GRAPH_BAR_WIDTH,
+            y(dataPoint.value * animationState.current) * -1
+        );
 
-			const roundedRect = Skia.RRectXY(rect, 8, 8)
-			newPath.addRRect(roundedRect)
-		});
-		return newPath;
-	}, [animationState])
+        const roundedRect = Skia.RRectXY(rect, 8, 8);
+        newPath.addRRect(roundedRect);
+    });
+    return newPath;
+}, [animationState, barChartData]);
 
 	const animate = () => {
 		animationState.current = 0
@@ -213,7 +200,7 @@ useEffect(() => {
 		<Canvas style={styles.canvas}>
 			<Path path={graphPath} color="purple"/>
 			{
-				randomData.map((dataPoint) => (
+				barChartData.map((dataPoint) => (
 				<ShopifyText
 					key={dataPoint.label}
 					font={font}
