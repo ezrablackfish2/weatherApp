@@ -40,7 +40,7 @@ import colors from "../colors.js";
 const GRAPH_MARGIN = 20;
 const GRAPH_BAR_WIDTH = 20;
 const CanvasHeight = 400;
-const CanvasWidth = 500;
+const CanvasWidth = 600;
 
 const graphHeight = CanvasHeight - 2 * GRAPH_MARGIN;
 const graphWidth = CanvasWidth - 2;
@@ -162,7 +162,7 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 	const xRange = [0, graphWidth]
 	const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1);
 
-	const font = useFont(require("../assets/fonts/Rajdhani-Regular.ttf"), 30);
+	const font = useFont(require("../assets/fonts/Rajdhani-Regular.ttf"), 25);
 
 	const yDomain = [
 		0,
@@ -214,7 +214,7 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 					font={font}
 					x={x(dataPoint.label) - 20}
 					y={CanvasHeight - 5}
-					text={dataPoint.label}
+					text={dataPoint.label.substring(0, 3)}
 				/>
 				))
 			}
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 	},
 	generalHome: {
 		position: "absolute",
-		left: 20,
+		left: 0,
 		top: 300,
 		width:  "100%",
 		height: "100%",
