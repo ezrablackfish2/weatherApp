@@ -16,7 +16,7 @@ import { Picker } from '@react-native-picker/picker';
 import { BarChart } from 'react-native-chart-kit';
 import * as d3 from "d3";
 import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue, } from "@shopify/react-native-skia";
-
+import { Ionicons } from '@expo/vector-icons';
 import { Text as ShopifyText } from '@shopify/react-native-skia'; 
 
 import SettingsScreen from "./SettingsScreen";
@@ -209,17 +209,32 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 			<Path path={graphPath} color="purple"/>
 			{
 				barChartData.map((dataPoint) => (
+				<React.Fragment key={dataPoint.label}>
 				<ShopifyText
-					key={dataPoint.label}
 					font={font}
 					x={x(dataPoint.label) - 20}
-					y={CanvasHeight - 5}
-					text={dataPoint.label.substring(0, 3)}
+					y={CanvasHeight + 0}
+					text={`${dataPoint.label?.substring(0, 3)}`}
 				/>
+
+				<ShopifyText
+					font={font}
+					x={x(dataPoint.label) - 20}
+					y={CanvasHeight  - 20}
+					text={`${dataPoint.value}°C`}
+				/>
+				</React.Fragment>
+
+
 				))
 			}
 		</Canvas>
-		<Button title="Update Forecast" onPress={animate}/>	
+		<TouchableOpacity
+			style={styles.forecastButton} 
+			title="Update Forecast" 
+			onPress={animate}>
+			<Ionicons name="reload" size={60} color="purple" />	
+		</TouchableOpacity>
 
 		</View>
 		
@@ -259,7 +274,11 @@ const styles = StyleSheet.create({
 	canvas: {
 		height: CanvasHeight,
 		width: CanvasWidth,
-	}
+	},
+	forecastButton : {
+		left: 250,
+		top: 30,
+	},
 });
 
 export default WeatherForecastScreen;
