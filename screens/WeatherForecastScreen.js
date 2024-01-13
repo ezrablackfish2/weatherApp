@@ -13,7 +13,11 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { BarChart } from 'react-native-chart-kit';
+import * as d3 from "d3";
+import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue, } from "@shopify/react-native-skia";
 
+import { Text as ShopifyText } from '@shopify/react-native-skia'; 
 
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
@@ -32,6 +36,14 @@ import windy from "../assets/images/windy.png";
 import rainy from "../assets/images/rainy.png";
 import colors from "../colors.js";
 
+
+const GRAPH_MARGIN = 20;
+const GRAPH_BAR_WIDTH = 20;
+const CanvasHeight = 400;
+const CanvasWidth = 500;
+
+const graphHeight = CanvasHeight - 2 * GRAPH_MARGIN;
+const graphWidth = CanvasWidth - 2;
 
 
 const WeatherForecastScreen = props => {
@@ -88,25 +100,86 @@ useEffect(() => {
         return weatherDict[todayWeather];
 };
 
-useEffect(() => {
-  if (data.length > 0 && todayDateString !== '') {
-    const cityData = data.find((city) => city.city === selectedCity);
-    if (cityData) {
-      const futureCityData = cityData.forecast.filter(
-        (item) => item.date !== todayDateString
-      ).slice(0, 5);
+	useEffect(() => {
+  		if (data.length > 0 && todayDateString !== '') {
+    		const cityData = data.find((city) => city.city === selectedCity);
+    		if (cityData) {
+      		const futureCityData = cityData.forecast.filter(
+        		(item) => item.date !== todayDateString
+	      ).slice(0, 5);
 
-      setFilteredData(futureCityData);
+	      setFilteredData(futureCityData);
 
-      if (futureCityData.length > 0) {
-        const futureWeatherTypes = futureCityData.map((item) => item.weather);
-        console.log(`Weather forecast for the next 5 days in ${selectedCity}:`, futureWeatherTypes);
-      }
-    }
-  }
-}, [data, selectedCity, todayDateString]);
+	      if (futureCityData.length > 0) {
+	        const futureWeatherTypes = futureCityData.map((item) => item.weather);
+	        console.log(`Weather forecast for the next 5 days in ${selectedCity}:`, futureWeatherTypes);
+		const averageTemperatures = futureCityData.map((item) => item.avg);
+	
+	          // Set up data for the bar chart
+	          setBarChartData({
+	            labels: futureWeatherTypes,
+	            datasets: [
+	              {
+	                data: averageTemperatures,
+	              },
+	            ],
+	          });
+	      }
+	    }
+	  }
+	}, [data, selectedCity, todayDateString]);
+	
+	
+	const [barChartData, setBarChartData] = useState({
+	    labels: [],
+	    datasets: [
+	      {
+	        data: [],
+	      },
+	    ],
+	  });
 
+	const randomData = [
+		{label: 'Mon', value: 50},
+		{label: 'Teu', value: 100},
+		{label: 'Wed', value: 150},
+		{label: 'Thu', value: 200},
+		{label: 'Fri', value: 250},
+	]
 
+	
+
+	
+
+	const xDomain = randomData.map((xDataPoint) => xDataPoint.label)
+	const xRange = [0, graphWidth]
+	const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1);
+
+	const font = useFont(require("../assets/fonts/Rajdhani-Regular.ttf"), 30);
+
+	const yDomain = [
+		0,
+		d3.max(randomData, (yDataPoint) => yDataPoint.value)
+	]
+	const yRange = [0, graphHeight]
+	const y = d3.scaleLinear().domain(yDomain).range(yRange);
+
+	const graphPath = useComputedValue(() => {
+		const newPath = Skia.Path.Make();
+
+		randomData.forEach((dataPoint) => {
+			const rect = Skia.XYWHRect(
+				x(dataPoint.label) - GRAPH_BAR_WIDTH / 2,
+				graphHeight,
+				GRAPH_BAR_WIDTH,
+				y(dataPoint.value) * -1 
+			)
+
+			const roundedRect = Skia.RRectXY(rect, 8, 8)
+			newPath.addRRect(roundedRect)
+		});
+		return newPath;
+	}, [randomData])
 
 
     return <View style={styles.container}>
@@ -115,6 +188,26 @@ useEffect(() => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>	
+		<View style={styles.generalHome}>
+		<Canvas style={styles.canvas}>
+			<Path path={graphPath} color="purple"/>
+			{
+				randomData.map((dataPoint) => (
+				<ShopifyText
+					key={dataPoint.label}
+					font={font}
+					fontSize={500}
+					x={x(dataPoint.label) - 10}
+					y={CanvasHeight - 25}
+					text={dataPoint.label}
+						/>
+				))
+			}
+		</Canvas>
+			
+
+		</View>
+		
 
 		</ImageBackground>
 		<View>
@@ -137,6 +230,21 @@ const styles = StyleSheet.create({
     		width: "100%",
 		height: "100%",
 	},
+	generalHome: {
+		position: "absolute",
+		left: 20,
+		top: 300,
+		width:  "100%",
+		height: "100%",
+		borderRadius: 20,
+		opacity: 1,
+		overflow: "hidden",
+//		backgroundColor: colors.white,
+	},
+	canvas: {
+		height: CanvasHeight,
+		width: CanvasWidth,
+	}
 });
 
 export default WeatherForecastScreen;
