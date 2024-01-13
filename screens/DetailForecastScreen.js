@@ -40,8 +40,9 @@ const DetailForecastScreen = props => {
 
 	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
-	const [selectedCity, setSelectedCity] = useState('');
-	const [selectedCountry, setSelectedCountry] = useState('');
+	const [selectedCity, setSelectedCity] = useState('Monterey Park');
+	const [todayDateString, setTodayDateString] = useState('');
+	const [filteredData, setFilteredData] = useState([]);
 
 	const toggleShower = () => {
 		setShower(!shower);
@@ -66,6 +67,16 @@ const DetailForecastScreen = props => {
 	useEffect(() => {
 		fetchData();
 	}, []);
+
+
+	useEffect(() => {
+    		const today = new Date();
+    		const year = today.getFullYear();
+    		const month = today.getMonth() + 1;
+    		const day = today.getDate();
+    		setTodayDateString(`${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`);
+  }, []);
+
 	
 	const fetchData = async() => {
 		try {
@@ -76,6 +87,8 @@ const DetailForecastScreen = props => {
 			console.error("Error Fetching Weather data", error);
 		}
 	};
+
+
 
 
 const setBackgroundImage = () => {
@@ -91,6 +104,24 @@ const setBackgroundImage = () => {
   }
 return sunny;
 };	
+
+
+
+
+useEffect(() => {
+    if (data.length > 0 && todayDateString !== '') {
+      const cityData = data.find(city => city.city === selectedCity);
+      if (cityData) {
+        const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString);
+        setFilteredData(filteredCityData);
+      }
+    }
+  }, [data, selectedCity, todayDateString]);
+
+
+
+
+
 
 
 
@@ -111,20 +142,24 @@ return sunny;
 		style={styles.backgroundImageGeneral}
 		resizeMode="stretch"
 		>
-	    	{data
-			.filter((item) => item.city === selectedCity)
+	    	{filteredData
 			.map((item, index) => (
-		<React.Fragment key={item.id}>
 	    	<Text 
-		style={styles.generalTemp}
+			key={index}
+			style={styles.generalTemp}
 		>
 	    	{item.avg}° C
 	    	</Text>
+
+			))}
+	    {data
+		.filter((item) => item.city === selectedCity)
+		.map((item, index) => ( 
 		<Text 
+			key={index}
 			style={styles.generalPlace}>
 		{item.city}, {item.country}
 	    	</Text>
-		</React.Fragment>
 		))}
 	    	</ImageBackground>
 	    	</View>
@@ -173,8 +208,7 @@ return sunny;
 
 		<View>
 		
-		{data
-			.filter((item) => item.city === selectedCity)
+		{filteredData
 			.map((item, index) => (
 		<View key={index} style={styles.table}>
 			<View style={styles.row}>
