@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList, Easing } from 'react-native';
 import backgroundImage from "../assets/images/forecast.webp";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -54,7 +54,8 @@ const WeatherForecastScreen = props => {
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
-
+	const animationState = useValue(0);
+	const [randomData, setRandomData] = useState([]);
 
 	const weatherDict = {
 		"sunny": sunny,
@@ -138,17 +139,28 @@ useEffect(() => {
 	      },
 	    ],
 	  });
+	console.log(JSON.stringify(barChartData));
 
-	const randomData = [
-		{label: 'Mon', value: 50},
-		{label: 'Teu', value: 100},
-		{label: 'Wed', value: 150},
-		{label: 'Thu', value: 200},
-		{label: 'Fri', value: 250},
-	]
+//	const randomData = [
+//		{label: 'Mon', value: 50},
+//		{label: 'Teu', value: 100},
+//		{label: 'Wed', value: 150},
+//		{label: 'Thu', value: 200},
+//		{label: 'Fri', value: 250},
+//	]
+	
+	useEffect(() => {
 
+	const transformedData = barChartData.labels.map((label, index) => ({
+      label,
+      value: barChartData.datasets[0].data[index],
+    }));
+	setRandomData(transformedData);
+
+	}, [barChartData]);
 	
 
+	console.log(JSON.stringify(randomData));
 	
 
 	const xDomain = randomData.map((xDataPoint) => xDataPoint.label)
@@ -172,14 +184,23 @@ useEffect(() => {
 				x(dataPoint.label) - GRAPH_BAR_WIDTH / 2,
 				graphHeight,
 				GRAPH_BAR_WIDTH,
-				y(dataPoint.value) * -1 
+				y(dataPoint.value * animationState.current) * -1 
 			)
 
 			const roundedRect = Skia.RRectXY(rect, 8, 8)
 			newPath.addRRect(roundedRect)
 		});
 		return newPath;
-	}, [randomData])
+	}, [animationState])
+
+	const animate = () => {
+		animationState.current = 0
+
+		runTiming(animationState,1, {
+			duration: 1600,
+			easing: Easing.inOut(Easing.exp),
+		});
+	}
 
 
     return <View style={styles.container}>
@@ -196,15 +217,14 @@ useEffect(() => {
 				<ShopifyText
 					key={dataPoint.label}
 					font={font}
-					fontSize={500}
-					x={x(dataPoint.label) - 10}
-					y={CanvasHeight - 25}
+					x={x(dataPoint.label) - 20}
+					y={CanvasHeight - 5}
 					text={dataPoint.label}
-						/>
+				/>
 				))
 			}
 		</Canvas>
-			
+		<Button title="Update Forecast" onPress={animate}/>	
 
 		</View>
 		
