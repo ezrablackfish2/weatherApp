@@ -43,6 +43,7 @@ const DetailForecastScreen = props => {
 	const [selectedCity, setSelectedCity] = useState('Monterey Park');
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
+	const [todayWeather, setTodayWeather] = useState("sunny");
 
 	const toggleShower = () => {
 		setShower(!shower);
@@ -92,17 +93,7 @@ const DetailForecastScreen = props => {
 
 
 const setBackgroundImage = () => {
-  if (data && data.length > 0) {
-    const weatherItem = data.find((item) => item.city === selectedCity);
-
-    if (weatherItem) {
-      const { weather } = weatherItem;
-      if (weatherDict[weather]) {
-        return weatherDict[weather];
-      }
-    }
-  }
-return sunny;
+        return weatherDict[todayWeather];
 };	
 
 
@@ -114,6 +105,7 @@ useEffect(() => {
       if (cityData) {
         const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString);
         setFilteredData(filteredCityData);
+	setTodayWeather(filteredCityData[0].weather);
       }
     }
   }, [data, selectedCity, todayDateString]);
