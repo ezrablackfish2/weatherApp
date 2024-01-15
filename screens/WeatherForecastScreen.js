@@ -216,14 +216,14 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 				<React.Fragment key={dataPoint.label}>
 				<ShopifyText
 					font={font}
-					x={x(dataPoint.label) - 20}
+					x={x(dataPoint.label) - 57}
 					y={CanvasHeight - 20}
-					text={`${dataPoint.weather}`}
+					text={`${dataPoint.weather?.substring(0, 8)}`}
 				/>
 
 				<ShopifyText
 					font={font}
-					x={x(dataPoint.label) - 20}
+					x={x(dataPoint.label) - 57}
 					y={CanvasHeight  + 0}
 					text={`${dataPoint.value}°C`}
 				/>
