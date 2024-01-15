@@ -112,9 +112,11 @@ useEffect(() => {
 	      setFilteredData(futureCityData);
 
 	      if (futureCityData.length > 0) {
-          const ChartData = futureCityData.map((item) => ({
-            label: item.date, // assuming item.date is the label
-            value: item.avg,
+          const ChartData = futureCityData.map((item, index) => ({
+		key: `${item.date}_${index}`,
+            	label: item.date, 
+            	value: item.avg,
+		weather: item.weather,
           }));
 
           // Set up data for the bar chart
@@ -126,7 +128,6 @@ useEffect(() => {
 	
 	
 	const [barChartData, setBarChartData] = useState([]);
-	console.log(JSON.stringify(barChartData));
 
 	const randomData = [
 		{label: 'Mon', value: 50},
@@ -213,16 +214,25 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 20}
-					y={CanvasHeight + 0}
+					y={CanvasHeight - 18}
 					text={`${dataPoint.label?.substring(0, 3)}`}
 				/>
 
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 20}
-					y={CanvasHeight  - 20}
+					y={CanvasHeight  + 0}
+					text={`${dataPoint.weather}`}
+				/>
+
+				<ShopifyText
+					font={font}
+					x={x(dataPoint.label) - 57}
+					y={CanvasHeight  - 40}
+					
 					text={`${dataPoint.value}°C`}
 				/>
+
 				</React.Fragment>
 
 
