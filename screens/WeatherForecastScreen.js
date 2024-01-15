@@ -105,10 +105,13 @@ useEffect(() => {
   		if (data.length > 0 && todayDateString !== '') {
     		const cityData = data.find((city) => city.city === selectedCity);
     		if (cityData) {
-      		const futureCityData = cityData.forecast.filter(
-        		(item) => item.date !== todayDateString
-	      ).slice(0, 5);
+//      	const futureCityData = cityData.forecast.filter(
+//      		(item) => item.date !== todayDateString
+//	      ).slice(0, 5);
 
+		const futureCityData = cityData.forecast.filter(
+        		(item) => item.date > todayDateString
+      	      ).slice(0, 5);
 	      setFilteredData(futureCityData);
 
 	      if (futureCityData.length > 0) {
@@ -214,23 +217,23 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 20}
-					y={CanvasHeight - 18}
-					text={`${dataPoint.label?.substring(0, 3)}`}
+					y={CanvasHeight - 20}
+					text={`${dataPoint.weather}`}
 				/>
 
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 20}
 					y={CanvasHeight  + 0}
-					text={`${dataPoint.weather}`}
+					text={`${dataPoint.value}°C`}
 				/>
 
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 57}
 					y={CanvasHeight  - 40}
+					text={`${dataPoint.label?.substring(0, 3)}`}
 					
-					text={`${dataPoint.value}°C`}
 				/>
 
 				</React.Fragment>
