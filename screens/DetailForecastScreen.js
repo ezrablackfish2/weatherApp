@@ -40,7 +40,7 @@ const DetailForecastScreen = props => {
 
 	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
-	const [selectedCity, setSelectedCity] = useState('Monterey Park');
+//	const [selectedCity, setSelectedCity] = useState('Monterey Park');
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
@@ -101,14 +101,14 @@ const setBackgroundImage = () => {
 
 useEffect(() => {
     if (data.length > 0 && todayDateString !== '') {
-      const cityData = data.find(city => city.city === selectedCity);
+      const cityData = data.find(city => city.city === props.selectedCity);
       if (cityData) {
         const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString);
         setFilteredData(filteredCityData);
 	setTodayWeather(filteredCityData[0].weather);
       }
     }
-  }, [data, selectedCity, todayDateString]);
+  }, [data, props.selectedCity, todayDateString]);
 
 
 
@@ -145,7 +145,7 @@ useEffect(() => {
 
 			))}
 	    {data
-		.filter((item) => item.city === selectedCity)
+		.filter((item) => item.city === props.selectedCity)
 		.map((item, index) => ( 
 		<Text 
 			key={index}
@@ -167,8 +167,8 @@ useEffect(() => {
 	    	>
 
 	<Picker
-        selectedValue={selectedCity}
-        onValueChange={(itemValue) => setSelectedCity(itemValue)}>
+        selectedValue={props.selectedCity}
+        onValueChange={(itemValue) => props.setSelectedCity(itemValue)}>
 
         {data.map((item, index) => (
           <Picker.Item key={item.city} label={`${item.country} - ${item.city}`} value={item.city} />

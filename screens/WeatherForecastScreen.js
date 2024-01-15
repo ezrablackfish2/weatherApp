@@ -50,7 +50,7 @@ const WeatherForecastScreen = props => {
 	// this function shows weather up to 5 days from mock API
    	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
-	const [selectedCity, setSelectedCity] = useState('Monterey Park');
+//	const [selectedCity, setSelectedCity] = useState('Monterey Park');
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
@@ -103,7 +103,7 @@ useEffect(() => {
 
 	useEffect(() => {
   		if (data.length > 0 && todayDateString !== '') {
-    		const cityData = data.find((city) => city.city === selectedCity);
+    		const cityData = data.find((city) => city.city === props.selectedCity);
     		if (cityData) {
 //      	const futureCityData = cityData.forecast.filter(
 //      		(item) => item.date !== todayDateString
@@ -127,7 +127,7 @@ useEffect(() => {
 	      }
 	    }
 	  }
-	}, [data, selectedCity, todayDateString]);
+	}, [data, props.selectedCity, todayDateString]);
 	
 	
 	const [barChartData, setBarChartData] = useState([]);
