@@ -60,7 +60,7 @@ const WeatherForecastScreen = props => {
 	const animationState = useValue(0);
 //	const [randomData, setRandomData] = useState([]);
 	const [loading, setLoading] = useState(true);
-
+	const [Error, setError] = useState(false);
 
 
 
@@ -103,6 +103,7 @@ useEffect(() => {
 		catch (error) {
 			console.error("Error Fetching Weather data", error);
 			setLoading(false);
+			setError(true);
 		}
 	};
 		
@@ -216,8 +217,10 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 		source={backgroundImage} 
 		style={styles.backgroundImage}
 		resizeMode="stretch"
-		>	
-		{loading ? (
+		>
+		{Error && <View><Text style={styles.Error}>Error Fetching Data From Weather Data Api</Text></View>}
+		
+		{!Error && (loading ? (
         	<View style={styles.loadingContainer}>
          	 <Image source={loadingImage} style={styles.loadingImage} />
         	</View>
@@ -267,7 +270,7 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 		</View>
 		
 		</>
-		)}
+		))}
 		</ImageBackground>
 		<View>
 			<Button title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
@@ -312,6 +315,13 @@ const styles = StyleSheet.create({
 		left: 120,
 		width: 250,
 		top: 200,
+	},
+	Error: {
+		fontFamily: "Itim",
+		fontSize: 40,
+		color: "red",
+		zIndex: 999,
+		margin: 20,
 	}
 });
 
