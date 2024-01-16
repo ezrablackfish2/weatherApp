@@ -46,6 +46,7 @@ const DetailForecastScreen = props => {
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
 	const [loading, setLoading] = useState(true);
+	const [Error, setError] = useState(false);
 
 	const toggleShower = () => {
 		setShower(!shower);
@@ -90,6 +91,7 @@ const DetailForecastScreen = props => {
 		catch (error) {
 			console.error("Error Fetching Weather data from api", error);
 			setLoading(false);
+			setError(true);
 		}
 	};
 
@@ -131,7 +133,8 @@ useEffect(() => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
-	    	{loading ? (
+	    	{Error && <View><Text style={styles.Error}>Error Fetching Data From Weather Data Api</Text></View>}
+	    {!Error && (loading ? (
         	<View style={styles.loadingContainer}>
          	 <Image source={loadingImage} style={styles.loadingImage} />
         	</View>
@@ -349,7 +352,7 @@ useEffect(() => {
 
 	    	</View>
 		</>
-		)}
+		))}
 
 		</ImageBackground>
     </SafeAreaView>
@@ -504,6 +507,13 @@ const styles = StyleSheet.create({
 		left: 120,
 		width: 250,
 		top: 200,
+	},
+	Error: {
+		fontFamily: "Itim",
+		fontSize: 40,
+		color: "red",
+		zIndex: 999,
+		margin: 20,
 	}
 });
 
