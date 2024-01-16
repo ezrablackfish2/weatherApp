@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 const SettingsScreen = props => {
-	// this function allows users to change setting if temperature to another
+	// this function allows users to change setting if temperature celsius to kelvin or Farheniet
+	//
     
     return <View style={styles.container}>
         <Text>setting screen</Text>
 	
-	<Button title="Go To Home" onPress={() => { props.navigation.navigate("Home") }}/>{/* this directs the user to the home screen */}
     </View>
 };
 

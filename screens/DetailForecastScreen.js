@@ -39,19 +39,21 @@ import loadingImage from '../assets/images/loading.gif';
 const DetailForecastScreen = props => {
 	// this function shows detailed weather of that day up to 5 days from mock API
 
-	const [data, setData] = useState([]);
-	const [shower, setShower] = useState(false);
-	const { selectedCity, setSelectedCity } = useSharedState();
-	const [todayDateString, setTodayDateString] = useState('');
-	const [filteredData, setFilteredData] = useState([]);
-	const [todayWeather, setTodayWeather] = useState("sunny");
-	const [loading, setLoading] = useState(true);
-	const [Error, setError] = useState(false);
-
+	const [data, setData] = useState([]);  // a state where data is to be fetched from the weather api
+	const [shower, setShower] = useState(false); // this state is used to show more or less version of detail in weather
+	const { selectedCity, setSelectedCity } = useSharedState(); // this is a state to tell us where we city chosen will be kept
+	const [todayDateString, setTodayDateString] = useState(''); // this is a state to tell the date of today
+	const [filteredData, setFilteredData] = useState([]); //this is a state to filter the whole data with a date of today and a city chosen
+	const [todayWeather, setTodayWeather] = useState("sunny"); // this state is need to tell today's weather condition
+	const [loading, setLoading] = useState(true); // this state tells if a loading screen appears or disappears initially it is true
+	const [Error, setError] = useState(false); // this state tells if an error occured from fetching from an api or not initially it is false
+	
+	// this function is used to change or toggle the appearing details in weather app to shorten or lengthen
 	const toggleShower = () => {
 		setShower(!shower);
 	}
 
+	// this are the all the conditions of weather with thier respective image and icons
 	const weatherDict = {
 		"sunny": sunny,
 		"blizzard": blizzard,
@@ -68,36 +70,38 @@ const DetailForecastScreen = props => {
 		"rainy": rainy
 	}
 
+	// this starts the fetching process before all the other process
 	useEffect(() => {
 		fetchData();
 	}, []);
 
 
 	useEffect(() => {
-    		const today = new Date();
-    		const year = today.getFullYear();
-    		const month = today.getMonth() + 1;
-    		const day = today.getDate();
-    		setTodayDateString(`${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`);
+		
+    		const today = new Date(); // a date datatype variable is declared
+    		const year = today.getFullYear(); //to get up to the full year we make this
+    		const month = today.getMonth() + 1; // getting the month
+    		const day = today.getDate(); // getting the day iin date
+    		setTodayDateString(`${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`); // we make it in a year month date format
   }, []);
 
-	
+	// this is where our data is fetched	
 	const fetchData = async() => {
 		try {
-			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData');
-			setData(response.data);
-			setLoading(false);
+			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData'); //fetching using axios
+			setData(response.data); // this sets our state the fetched response data
+			setLoading(false); // now loading disappears
 		}
 		catch (error) {
-			console.error("Error Fetching Weather data from api", error);
-			setLoading(false);
-			setError(true);
+			console.error("Error Fetching Weather data from api", error); // this logs an error in the console
+			setLoading(false); // even now loading disappears
+			setError(true); // we are setting an error to true of our state
 		}
 	};
 
 
 
-
+// now we are telling the image background or icon of the weather to make it an image from our weather dictionary
 const setBackgroundImage = () => {
         return weatherDict[todayWeather];
 };	
@@ -106,15 +110,15 @@ const setBackgroundImage = () => {
 
 
 useEffect(() => {
-    if (data.length > 0 && todayDateString !== '') {
-      const cityData = data.find(city => city.city === selectedCity);
+    if (data.length > 0 && todayDateString !== '') { // if the date of today is found
+      const cityData = data.find(city => city.city === selectedCity); //filter the data with city selected
       if (cityData) {
-        const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString);
-        setFilteredData(filteredCityData);
-	setTodayWeather(filteredCityData[0].weather);
+        const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString); //filtering our data using the date of today
+        setFilteredData(filteredCityData); //now we make this filtered data into our filtered data
+	setTodayWeather(filteredCityData[0].weather); // we are making the first array the data of weather
       }
     }
-  }, [data, selectedCity, todayDateString]);
+  }, [data, selectedCity, todayDateString]); // this are the dependencies the function depends on
 
 
 
@@ -359,6 +363,7 @@ useEffect(() => {
     );
 };
 
+// using dimension property we are getting the phone screen width
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({

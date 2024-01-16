@@ -5,8 +5,8 @@ import backgroundImage from "../assets/images/about.jpg";
 
 
 const AboutScreen = props => {
-	// this function tells us about the weather app
-    
+	// this function tells us about the weather app who made it and about the app
+	// has background image from an imported image
     return <View style={styles.container}>
 		<ImageBackground 
 		source={backgroundImage}

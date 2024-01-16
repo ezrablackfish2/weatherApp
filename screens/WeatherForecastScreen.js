@@ -51,19 +51,17 @@ const graphWidth = CanvasWidth - 2;
 
 const WeatherForecastScreen = props => {
 	// this function shows weather up to 5 days from mock API
-   	const [data, setData] = useState([]);
-	const [shower, setShower] = useState(false);
-	const { selectedCity, setSelectedCity } = useSharedState();
-	const [todayDateString, setTodayDateString] = useState('');
-	const [filteredData, setFilteredData] = useState([]);
-	const [todayWeather, setTodayWeather] = useState("sunny");
-	const animationState = useValue(0);
-//	const [randomData, setRandomData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [Error, setError] = useState(false);
+   	const [data, setData] = useState([]); //this is a data state where a fetched data from is stored
+	const { selectedCity, setSelectedCity } = useSharedState(); //this again is a shared state of a city chosen by the user is stored
+	const [todayDateString, setTodayDateString] = useState(''); // we want to know the date of today
+	const [filteredData, setFilteredData] = useState([]); // this tells about a filtered data using city and date 
+	const [todayWeather, setTodayWeather] = useState("sunny"); // this is the date of today so that we can see what is going on
+	const animationState = useValue(1); // this is a value  to tell whether a bar chart is to be shown or not
+	const [loading, setLoading] = useState(true); // this shows if loading screen appears or disappears initially true
+	const [Error, setError] = useState(false); // this shows an error screen to appear if fetching failed and initially false
 
 
-
+// this is dictionary to show correspondence between weather condition and icon or photo
 	const weatherDict = {
 		"sunny": sunny,
 		"blizzard": blizzard,
@@ -80,56 +78,56 @@ const WeatherForecastScreen = props => {
 		"rainy": rainy
 	}
 
+
+// fetching again begins
 useEffect(() => {
 		fetchData();
 	}, []);
 
-
+// date of the present day is operated here
 	useEffect(() => {
-    		const today = new Date();
-    		const year = today.getFullYear();
-    		const month = today.getMonth() + 1;
-    		const day = today.getDate();
-    		setTodayDateString(`${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`);
+    		const today = new Date(); // date datatype variable is declared
+    		const year = today.getFullYear(); // the year of present day
+    		const month = today.getMonth() + 1; // the month of present day
+    		const day = today.getDate(); // the day of present day
+    		setTodayDateString(`${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`); //format of the year month and day
   }, []);
 
 	
 	const fetchData = async() => {
 		try {
-			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData');
-			setData(response.data);
-			setLoading(false);
+			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData'); // we fetch data from our weather api to us
+			setData(response.data); // our state data is set from the url fetched
+			setLoading(false); // we are making loading false cause it finished loading
 		}
 		catch (error) {
-			console.error("Error Fetching Weather data", error);
-			setLoading(false);
-			setError(true);
+			console.error("Error Fetching Weather data", error); //log the error in console
+			setLoading(false);// in error loading is done 
+			setError(true); // set error to reu
 		}
 	};
 		
+	// setting background image for weather is created here too
 	const setBackgroundImage = () => {
         return weatherDict[todayWeather];
 };
 
 	useEffect(() => {
-  		if (data.length > 0 && todayDateString !== '') {
-    		const cityData = data.find((city) => city.city === selectedCity);
-    		if (cityData) {
-//      	const futureCityData = cityData.forecast.filter(
-//      		(item) => item.date !== todayDateString
-//	      ).slice(0, 5);
+  		if (data.length > 0 && todayDateString !== '') { //if today is present
+    		const cityData = data.find((city) => city.city === selectedCity); //filter through city selected by user
+    		if (cityData) {  // if city data is found
 
-		const futureCityData = cityData.forecast.filter(
-        		(item) => item.date > todayDateString
-      	      ).slice(0, 5);
-	      setFilteredData(futureCityData);
+		const futureCityData = cityData.forecast.filter( //filter through the date of today
+        		(item) => item.date > todayDateString //dates of future that are greater than present day
+      	      ).slice(0, 5); // up to 5 items
+	      setFilteredData(futureCityData); //now filtered data is set
 
-	      if (futureCityData.length > 0) {
-          const ChartData = futureCityData.map((item, index) => ({
-		key: `${item.date}_${index}`,
-            	label: item.date, 
-            	value: item.avg,
-		weather: item.weather,
+	      if (futureCityData.length > 0) { // if there is future data
+          const ChartData = futureCityData.map((item, index) => ({ //chart data is made here by iterating throught the datas of our filtered data
+		key: `${item.date}_${index}`, 
+            	label: item.date,  // one value needed is date
+            	value: item.avg, // another values is temperature average
+		weather: item.weather, //finally condition of the whether is taken
           }));
 
           // Set up data for the bar chart
@@ -137,77 +135,57 @@ useEffect(() => {
 	      }
 	    }
 	  }
-	}, [data, selectedCity, todayDateString]);
+	}, [data, selectedCity, todayDateString]); // dependencies where our function depends on
 	
 	
-	const [barChartData, setBarChartData] = useState([]);
+	const [barChartData, setBarChartData] = useState([]); // set a state of bar chart so that we take chart data into it
 
-	const randomData = [
-		{label: 'Mon', value: 50},
-		{label: 'Teu', value: 100},
-		{label: 'Wed', value: 150},
-		{label: 'Thu', value: 200},
-		{label: 'Fri', value: 250},
-	]
-	
-//	useEffect(() => {
-//
-//	const transformedData = barChartData.labels.map((label, index) => ({
-//      label,
-//      value: barChartData.datasets[0].data[index],
-//    }));
-//	setRandomData(transformedData);
-//
-//	}, [barChartData]);
-//	
-//
-//	console.log(JSON.stringify(randomData));
 
-const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; // list of datas where our date format will be changed to
 
   for (let i = 0; i < barChartData.length; i++) {
-    const dateObject = new Date(barChartData[i].label);
-    const dayOfWeek = daysOfWeek[dateObject.getDay()];
-    barChartData[i].label = dayOfWeek;
+    const dateObject = new Date(barChartData[i].label); //we are setting new data type where date is the type
+    const dayOfWeek = daysOfWeek[dateObject.getDay()]; // this declares a variable
+    barChartData[i].label = dayOfWeek; // now the data of barchart is changed to a week data from date format year month and date
   }
 
 
-	const xDomain = barChartData.map((xDataPoint) => xDataPoint.label)
-	const xRange = [0, graphWidth]
-	const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1);
+	const xDomain = barChartData.map((xDataPoint) => xDataPoint.label) // map through chart data and give an x domain this values
+	const xRange = [0, graphWidth] //the width of the graph or x range in mathematics
+	const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1); //we are specifying our graph here we are giving it to d3
 
-	const font = useFont(require("../assets/fonts/Rajdhani-Regular.ttf"), 25);
+	const font = useFont(require("../assets/fonts/Rajdhani-Regular.ttf"), 25); // for the barchart use this font and font size
 
 	const yDomain = [
 		0,
-		d3.max(barChartData, (yDataPoint) => yDataPoint.value)
+		d3.max(barChartData, (yDataPoint) => yDataPoint.value) // giving y axis values from the domain from 0 to the y point of the graph
 	]
-	const yRange = [0, graphHeight]
-	const y = d3.scaleLinear().domain(yDomain).range(yRange);
+	const yRange = [0, graphHeight] // now the length of the graph or y axis
+	const y = d3.scaleLinear().domain(yDomain).range(yRange); //we are giving a y data using d3 
 
-	const graphPath = useComputedValue(() => {
+	const graphPath = useComputedValue(() => { // we are to compute the chart datas
     const newPath = Skia.Path.Make();
 
     barChartData.forEach((dataPoint) => {
-        const rect = Skia.XYWHRect(
-            x(dataPoint.label) - GRAPH_BAR_WIDTH / 2,
-            graphHeight,
-            GRAPH_BAR_WIDTH,
-            y(dataPoint.value * animationState.current) * -1
+        const rect = Skia.XYWHRect( // we are creating a rounded table using our datas
+            x(dataPoint.label) - GRAPH_BAR_WIDTH / 2, // we are giving the x axis data
+            graphHeight, // the graph height is given
+            GRAPH_BAR_WIDTH, // the width of the bar
+            y(dataPoint.value * animationState.current) * -1 // the y values
         );
 
-        const roundedRect = Skia.RRectXY(rect, 8, 8);
+        const roundedRect = Skia.RRectXY(rect, 8, 8); // a rounded table is formed
         newPath.addRRect(roundedRect);
     });
     return newPath;
 }, [animationState, barChartData]);
 
 	const animate = () => {
-		animationState.current = 0
+		animationState.current = 0 //we are making it start from 0
 
-		runTiming(animationState,1, {
-			duration: 1600,
-			easing: Easing.inOut(Easing.exp),
+		runTiming(animationState,1, { //the animation of the bar chart take place here
+			duration: 1600, //time taken for the animation
+			easing: Easing.inOut(Easing.exp), //when the animation takes place it eases
 		});
 	}
 
@@ -301,7 +279,6 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		opacity: 1,
 		overflow: "hidden",
-//		backgroundColor: colors.white,
 	},
 	canvas: {
 		height: CanvasHeight,

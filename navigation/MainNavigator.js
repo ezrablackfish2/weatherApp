@@ -8,10 +8,7 @@ import { StyleSheet } from "react-native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import WeatherForecastScreen from "../screens/WeatherForecastScreen";
-import LocationSelectionScreen from "../screens/LocationSelectionScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import LoadingScreen from "../screens/LoadingScreen";
-import ErrorScreen from "../screens/ErrorScreen";
 import DetailForecastScreen from "../screens/DetailForecastScreen";
 import AboutScreen from "../screens/AboutScreen";
 
@@ -23,6 +20,9 @@ const DrawerNavigator = () => {
 
 	const [drawerOpen, setDrawerOpen] = useState("closed"); // state used to alternate between opening and closing the drawer
 	// drawer navigator is worked here and it alternates between the choices of detail forecast, setting screen and about screen
+	// i hid header title so that it can not be shown to anyone
+	// also shadw of header is invisible so that UI can be betterly viewed
+	// using drawerOpen state control opening or closing drawer navigation
 	return (
 	<Drawer.Navigator
 		screenOptions={{
@@ -36,7 +36,6 @@ const DrawerNavigator = () => {
 		>
       		<Drawer.Screen name="Home" component={DetailForecastScreen} />
       		<Drawer.Screen name="Settings" component={SettingsScreen} />
-      		<Drawer.Screen name="About" component={AboutScreen} />
     	</Drawer.Navigator>
 	);
 }
@@ -44,6 +43,8 @@ const DrawerNavigator = () => {
 
 // this is the tab navigator where shown on the bottom it has choices between deatil forecast screen weather forecast screen and about screen
 // the tabbar icon is the icons shown to the user of the bottom tabs used from expo icons
+// made tab to only be shown from right left and bottom so that the border could not be dragged to bottom
+//
 const TabNavigator = () => {
 	return (
 	<SafeAreaView 
@@ -86,6 +87,12 @@ const TabNavigator = () => {
 
 
 // this is the navigation previously used to navigate using just  a button method the home is detail forecast screen , settings screen and loading screen
+// header is invisible
+// made animation for all stack screen navigations
+// made gesture to true since on IOS it is always true and android default is false
+// made header back title after navigation to show go back
+// header title and shadow are invisible
+// made presentation of stack to be modal
 const MainNavigator = (props) => {
 	return(
 	<Stack.Navigator 
@@ -108,23 +115,6 @@ const MainNavigator = (props) => {
 			headerShadowVisible: false,
 		    }}/>
             <Stack.Screen name="Settings" component={SettingsScreen} options={{
-		    	headerTitle: "",
-		    	gestureEnabled: true,
-			animationEnabled: true,
-			presentation: "modal",
-			headerBackTitle: "Go Back",
-			headerShadowVisible: false,
-		    }}/>
-            <Stack.Screen name="Loading" component={LoadingScreen} options={{
-		    	headerTitle: "",
-		    	gestureEnabled: true,
-			animationEnabled: true,
-			presentation: "modal",
-			headerBackTitle: "Go Back",
-			headerShadowVisible: false,
-		    }}/>
-            <Stack.Screen name="Error" component={ErrorScreen} />
-            <Stack.Screen name="DetailForecast" component={DetailForecastScreen} options={{
 		    	headerTitle: "",
 		    	gestureEnabled: true,
 			animationEnabled: true,
