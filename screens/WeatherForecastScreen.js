@@ -217,8 +217,8 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 		<Canvas style={styles.canvas}>
 			<Path path={graphPath} color="purple"/>
 			{
-				barChartData.map((dataPoint) => (
-				<React.Fragment key={dataPoint.label}>
+				barChartData.map((dataPoint, index) => (
+				<React.Fragment key={`${dataPoint.label}_${index}`}>
 				<ShopifyText
 					font={font}
 					x={x(dataPoint.label) - 57}
