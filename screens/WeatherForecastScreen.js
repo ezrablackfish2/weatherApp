@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList, Easing } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList, Easing, Image } from 'react-native';
 import backgroundImage from "../assets/images/forecast.webp";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -19,6 +19,7 @@ import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue, } f
 import { Ionicons } from '@expo/vector-icons';
 import { Text as ShopifyText } from '@shopify/react-native-skia'; 
 import { useSharedState } from '../SharedStateContext.js';
+import loadingImage from '../assets/images/loading.gif';
 
 
 import SettingsScreen from "./SettingsScreen";
@@ -58,6 +59,7 @@ const WeatherForecastScreen = props => {
 	const [todayWeather, setTodayWeather] = useState("sunny");
 	const animationState = useValue(0);
 //	const [randomData, setRandomData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 
 
@@ -96,9 +98,11 @@ useEffect(() => {
 		try {
 			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData');
 			setData(response.data);
+			setLoading(false);
 		}
 		catch (error) {
 			console.error("Error Fetching Weather data", error);
+			setLoading(false);
 		}
 	};
 		
@@ -213,6 +217,12 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>	
+		{loading ? (
+        	<View style={styles.loadingContainer}>
+         	 <Image source={loadingImage} style={styles.loadingImage} />
+        	</View>
+      			) : (
+		<>
 		<View style={styles.generalHome}>
 		<Canvas style={styles.canvas}>
 			<Path path={graphPath} color="purple"/>
@@ -256,7 +266,8 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
 		</View>
 		
-
+		</>
+		)}
 		</ImageBackground>
 		<View>
 			<Button title="Settings" onPress={() => { props.navigation.navigate("Settings") }}/>{/* this directs the user to the weather setting screen */}
@@ -297,6 +308,11 @@ const styles = StyleSheet.create({
 		left: 250,
 		top: 30,
 	},
+	loadingImage:{
+		left: 120,
+		width: 250,
+		top: 200,
+	}
 });
 
 export default WeatherForecastScreen;
