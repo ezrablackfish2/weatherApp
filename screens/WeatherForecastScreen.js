@@ -60,7 +60,6 @@ const WeatherForecastScreen = props => {
 //	const [randomData, setRandomData] = useState([]);
 
 
-	console.log(props.selectedCity);
 
 
 	const weatherDict = {
