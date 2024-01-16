@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, ImageBackground, Dimensions, TouchableOpacity, FlatList, Image } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Feather } from '@expo/vector-icons';
@@ -32,7 +32,7 @@ import tornado from "../assets/images/tornado.png";
 import windy from "../assets/images/windy.png";
 import rainy from "../assets/images/rainy.png";
 import colors from "../colors.js";
-
+import loadingImage from '../assets/images/loading.gif';
 
 
 
@@ -45,6 +45,7 @@ const DetailForecastScreen = props => {
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
+	const [loading, setLoading] = useState(true);
 
 	const toggleShower = () => {
 		setShower(!shower);
@@ -84,9 +85,11 @@ const DetailForecastScreen = props => {
 		try {
 			const response = await axios.get('https://659e4dd347ae28b0bd358673.mockapi.io/api/v1/weatherData');
 			setData(response.data);
+			setLoading(false);
 		}
 		catch (error) {
-			console.error("Error Fetching Weather data", error);
+			console.error("Error Fetching Weather data from api", error);
+			setLoading(false);
 		}
 	};
 
@@ -128,6 +131,12 @@ useEffect(() => {
 		style={styles.backgroundImage}
 		resizeMode="stretch"
 		>
+	    	{loading ? (
+        	<View style={styles.loadingContainer}>
+         	 <Image source={loadingImage} style={styles.loadingImage} />
+        	</View>
+      			) : (
+		<>
 	    	<View style={styles.generalHome}>
 	    	<ImageBackground 
 		source={setBackgroundImage()}
@@ -339,6 +348,8 @@ useEffect(() => {
 
 
 	    	</View>
+		</>
+		)}
 
 		</ImageBackground>
     </SafeAreaView>
@@ -489,6 +500,11 @@ const styles = StyleSheet.create({
 		right: 45,
 		top: 30,
 	},
+	loadingImage:{
+		left: 120,
+		width: 250,
+		top: 200,
+	}
 });
 
 export default DetailForecastScreen;
