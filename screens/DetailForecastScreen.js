@@ -12,6 +12,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { useSharedState } from '../SharedStateContext.js';
 
 
 import SettingsScreen from "./SettingsScreen";
@@ -40,7 +41,7 @@ const DetailForecastScreen = props => {
 
 	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
-//	const [selectedCity, setSelectedCity] = useState('Monterey Park');
+	const { selectedCity, setSelectedCity } = useSharedState();
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
@@ -101,14 +102,14 @@ const setBackgroundImage = () => {
 
 useEffect(() => {
     if (data.length > 0 && todayDateString !== '') {
-      const cityData = data.find(city => city.city === props.selectedCity);
+      const cityData = data.find(city => city.city === selectedCity);
       if (cityData) {
         const filteredCityData = cityData.forecast.filter(item => item.date === todayDateString);
         setFilteredData(filteredCityData);
 	setTodayWeather(filteredCityData[0].weather);
       }
     }
-  }, [data, props.selectedCity, todayDateString]);
+  }, [data, selectedCity, todayDateString]);
 
 
 
@@ -167,8 +168,8 @@ useEffect(() => {
 	    	>
 
 	<Picker
-        selectedValue={props.selectedCity}
-        onValueChange={(itemValue) => props.setSelectedCity(itemValue)}>
+        selectedValue={selectedCity}
+        onValueChange={(itemValue) => setSelectedCity(itemValue)}>
 
         {data.map((item, index) => (
           <Picker.Item key={item.city} label={`${item.country} - ${item.city}`} value={item.city} />

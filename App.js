@@ -6,7 +6,7 @@ import * as Font from 'expo-font';
 import AppNavigator from "./navigation/AppNavigator.js";
 import { loadFonts } from './fonts.js';
 import 'react-native-gesture-handler';
-
+import { SharedStateProvider } from './SharedStateContext.js';
 
 
 SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
@@ -34,7 +34,9 @@ export default function App() {
     <SafeAreaProvider 
 	  onLayout={onLayout}> 
 	<SafeAreaView style={styles.container} onLayout={onLayout}>
+	  <SharedStateProvider>
 		<AppNavigator />
+	  </SharedStateProvider>
 	 </SafeAreaView> 
     </SafeAreaProvider>
   );

@@ -15,12 +15,11 @@ import ErrorScreen from "../screens/ErrorScreen";
 import DetailForecastScreen from "../screens/DetailForecastScreen";
 import AboutScreen from "../screens/AboutScreen";
 
-
 const Stack = createStackNavigator();  // this declares a navigation system using stack
 const Tab = createBottomTabNavigator(); // this declares a tab navigator
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = (props) => {
+const DrawerNavigator = () => {
 
 	const [drawerOpen, setDrawerOpen] = useState("closed");
 	return (
@@ -34,10 +33,7 @@ const DrawerNavigator = (props) => {
 		}}
 		defaultStatus={drawerOpen}
 		>
-      		<Drawer.Screen name="Home" 
-			component={(props) => (
-          		<DetailForecastScreen {...props} selectedCity={props.selectedCity} setSelectedCity={props.setSelectedCity} />
-        		)} />
+      		<Drawer.Screen name="Home" component={DetailForecastScreen} />
       		<Drawer.Screen name="Settings" component={SettingsScreen} />
       		<Drawer.Screen name="About" component={AboutScreen} />
     	</Drawer.Navigator>
@@ -45,7 +41,6 @@ const DrawerNavigator = (props) => {
 }
 
 const TabNavigator = () => {
-	const [selectedCity, setSelectedCity] = useState('Monterey Park');
 	return (
 	<SafeAreaView 
 		edges={["right", "left", "bottom"]}
@@ -60,20 +55,15 @@ const TabNavigator = () => {
 			tabBarLabelStyle: styles.tab,
 			tabBarStyle: styles.tabWhole,
 		}}>
-      		<Tab.Screen name="DetailForecast" 
-			component={(props) => (
-          		<DetailForecastScreen {...props} selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
-        		)}
-			options={{
+      		<Tab.Screen name="DetailForecast" component={DrawerNavigator} options={{
 			tabBarLabel: "",
 			tabBarIcon: ( { color, size }) => (
 				<Ionicons name="today" size={ 40 } color={ color } height={40} width={40} bottom={-15}/>	
 			)
-		}} />
+		}}
+		/>
       		<Tab.Screen name="WeatherForecast" 
-			component={(props) => (
-          		<WeatherForecastScreen {...props} selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
-        		)} options={{
+			component={WeatherForecastScreen} options={{
 			tabBarLabel: "",
 			tabBarIcon: ( { color, size }) => (
 				<Entypo name="area-graph" size={ 40 } color={ color } height={40} bottom={-15} />

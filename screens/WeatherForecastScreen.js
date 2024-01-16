@@ -18,6 +18,8 @@ import * as d3 from "d3";
 import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue, } from "@shopify/react-native-skia";
 import { Ionicons } from '@expo/vector-icons';
 import { Text as ShopifyText } from '@shopify/react-native-skia'; 
+import { useSharedState } from '../SharedStateContext.js';
+
 
 import SettingsScreen from "./SettingsScreen";
 import AboutScreen from "./AboutScreen";
@@ -50,12 +52,16 @@ const WeatherForecastScreen = props => {
 	// this function shows weather up to 5 days from mock API
    	const [data, setData] = useState([]);
 	const [shower, setShower] = useState(false);
-//	const [selectedCity, setSelectedCity] = useState('Monterey Park');
+	const { selectedCity, setSelectedCity } = useSharedState();
 	const [todayDateString, setTodayDateString] = useState('');
 	const [filteredData, setFilteredData] = useState([]);
 	const [todayWeather, setTodayWeather] = useState("sunny");
 	const animationState = useValue(0);
 //	const [randomData, setRandomData] = useState([]);
+
+
+	console.log(props.selectedCity);
+
 
 	const weatherDict = {
 		"sunny": sunny,
@@ -103,7 +109,7 @@ useEffect(() => {
 
 	useEffect(() => {
   		if (data.length > 0 && todayDateString !== '') {
-    		const cityData = data.find((city) => city.city === props.selectedCity);
+    		const cityData = data.find((city) => city.city === selectedCity);
     		if (cityData) {
 //      	const futureCityData = cityData.forecast.filter(
 //      		(item) => item.date !== todayDateString
@@ -127,7 +133,7 @@ useEffect(() => {
 	      }
 	    }
 	  }
-	}, [data, props.selectedCity, todayDateString]);
+	}, [data, selectedCity, todayDateString]);
 	
 	
 	const [barChartData, setBarChartData] = useState([]);
