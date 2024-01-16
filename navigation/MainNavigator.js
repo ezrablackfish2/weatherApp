@@ -17,11 +17,12 @@ import AboutScreen from "../screens/AboutScreen";
 
 const Stack = createStackNavigator();  // this declares a navigation system using stack
 const Tab = createBottomTabNavigator(); // this declares a tab navigator
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator(); // this declares a drawer type navigation where you can grap the drawer from the left edge of the screen
 
 const DrawerNavigator = () => {
 
-	const [drawerOpen, setDrawerOpen] = useState("closed");
+	const [drawerOpen, setDrawerOpen] = useState("closed"); // state used to alternate between opening and closing the drawer
+	// drawer navigator is worked here and it alternates between the choices of detail forecast, setting screen and about screen
 	return (
 	<Drawer.Navigator
 		screenOptions={{
@@ -40,6 +41,9 @@ const DrawerNavigator = () => {
 	);
 }
 
+
+// this is the tab navigator where shown on the bottom it has choices between deatil forecast screen weather forecast screen and about screen
+// the tabbar icon is the icons shown to the user of the bottom tabs used from expo icons
 const TabNavigator = () => {
 	return (
 	<SafeAreaView 
@@ -81,7 +85,7 @@ const TabNavigator = () => {
 }
 
 
-
+// this is the navigation previously used to navigate using just  a button method the home is detail forecast screen , settings screen and loading screen
 const MainNavigator = (props) => {
 	return(
 	<Stack.Navigator 
