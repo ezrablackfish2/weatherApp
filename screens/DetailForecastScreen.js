@@ -184,6 +184,8 @@ useEffect(() => {
 	    	>
 
 	<Picker
+	style={styles.picker}
+	itemStyle={styles.pickerItem}
         selectedValue={selectedCity}
         onValueChange={(itemValue) => setSelectedCity(itemValue)}>
 
@@ -442,6 +444,7 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		width: 50,
 		height: 50,
+		fontFamily: "Itim",
 	},
 	detailHomeShow: {
 		position: "absolute",
@@ -519,7 +522,18 @@ const styles = StyleSheet.create({
 		color: "red",
 		zIndex: 999,
 		margin: 20,
-	}
+	},
+	picker: {
+		flex: 1,
+		height: 50,
+		width: "100%",
+		color: "#333333",
+	},
+	pickerItem: {
+    		color: '#333',
+    		fontSize: 16,
+		fontFamily: "Itim",
+  	},
 });
 
 export default DetailForecastScreen;
