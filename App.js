@@ -14,28 +14,28 @@ SplashScreen.preventAutoHideAsync(); //this overides slash screen to show up
 
 
 export default function App() {
-	// this is where the weather app works this is the root function
-  const [appIsLoaded, setAppIsLoaded] = useState(false);  //tell if the app is loaded shows the app icon 
+	// this is where the weather app works this is the root app function
+  const [appIsLoaded, setAppIsLoaded] = useState(false);  //state used to tell if the app has finished loading all requirements
 
     useEffect(() => {
-	  loadFonts(setAppIsLoaded);
+	  loadFonts(setAppIsLoaded); //function used to load fonts from already established directory
   }, []);
   const onLayout = useCallback(async () => {
     if (appIsLoaded) {
-      await SplashScreen.hideAsync();  // hides the app icon
+      await SplashScreen.hideAsync();  // hides the splash screen if everything has been loaded
     }
   }, [appIsLoaded]);
 
   if (!appIsLoaded) {
-    return null;  //if the app icon is shown load nothing
+    return null;  //if nothing is established just show the splash screen
   }
 
   return (
-    <SafeAreaProvider 
-	  onLayout={onLayout}> 
+    <SafeAreaProvider // use safe area provider cause it removes cutting of edge seen icons or materials
+	  onLayout={onLayout}> // this is the layout where we want to show our user onlayout 
 	<SafeAreaView style={styles.container} onLayout={onLayout}>
-	  <SharedStateProvider>
-		<AppNavigator />
+	  <SharedStateProvider> // this help us to make state to be passable from one component to another
+		<AppNavigator /> // this is the navigator component where it divide our screen
 	  </SharedStateProvider>
 	 </SafeAreaView> 
     </SafeAreaProvider>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontFamily: "Bellota",
   },
 	label : {
-		fontFamily: "Bellota",
+		fontFamily: "Bellota", // fetched font from directory
 		fontSize: 20,
 	},
 });
