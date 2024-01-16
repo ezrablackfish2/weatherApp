@@ -30,18 +30,23 @@ export default function App() {
     return null;  //if nothing is established just show the splash screen
   }
 
+	// safe area provider is used to make our screen more watchable it make a margin so that you can see the interface of the text or icon with full visual
+	// onlayout is used to call a fucntion so that the layout we want to show is the specified layout
+	// appnavigator si the component where we want our whole route navigation to go through
+	// safe area view is where the safe zone for ui is shown
   return (
-    <SafeAreaProvider // use safe area provider cause it removes cutting of edge seen icons or materials
-	  onLayout={onLayout}> // this is the layout where we want to show our user onlayout 
+    <SafeAreaProvider
+	  onLayout={onLayout}> 
 	<SafeAreaView style={styles.container} onLayout={onLayout}>
-	  <SharedStateProvider> // this help us to make state to be passable from one component to another
-		<AppNavigator /> // this is the navigator component where it divide our screen
+	  <SharedStateProvider> 
+		<AppNavigator />
 	  </SharedStateProvider>
 	 </SafeAreaView> 
     </SafeAreaProvider>
   );
 }
 
+// font family shows the font from our already preloaded fonts
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     fontFamily: "Bellota",
   },
 	label : {
-		fontFamily: "Bellota", // fetched font from directory
+		fontFamily: "Bellota",
 		fontSize: 20,
 	},
 });

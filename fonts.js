@@ -1,9 +1,9 @@
 import React from "react";
 import * as Font from 'expo-font';
 
-export async function loadFonts(setAppIsLoaded) {
+export async function loadFonts(setAppIsLoaded) { // is async cause it should be loaded from any other fucntion starts
       try {
-        await Font.loadAsync({
+        await Font.loadAsync({ // this is where the fonts are being loaded from a directory
 				"Bellota": require("./assets/fonts/Bellota-Regular.ttf"),
 				"Aguafina": require("./assets/fonts/AguafinaScript-Regular.ttf"),
 				"Barrio": require("./assets/fonts/Barrio-Regular.ttf"),
@@ -24,9 +24,9 @@ export async function loadFonts(setAppIsLoaded) {
 	  
         });
       } catch (error) {
-        console.log(error);
+        console.log(error); // if error happens while loading font show this
       } finally {
-        setAppIsLoaded(true);
+        setAppIsLoaded(true); //after finish load the app to hide the splash screen
       }
 }
 
